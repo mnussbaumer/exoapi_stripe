@@ -38,7 +38,7 @@ defmodule ExOAPI.Stripe.SDK.Radar do
 
   @spec delete_radar_value_lists_value_list(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           value_list :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_radar_value_lists_value_list(%ExOAPI.Client{} = client, body, value_list) do
@@ -59,7 +59,14 @@ defmodule ExOAPI.Stripe.SDK.Radar do
 
   @spec post_radar_value_lists_value_list(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :name => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :alias => String.t()
+            }
+            | map(),
           value_list :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_radar_value_lists_value_list(%ExOAPI.Client{} = client, body, value_list) do
@@ -101,8 +108,11 @@ defmodule ExOAPI.Stripe.SDK.Radar do
 
   """
 
-  @spec post_radar_value_list_items(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_radar_value_list_items(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{:value_list => String.t(), :value => String.t(), :expand => [String.t()]} | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_radar_value_list_items(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -181,8 +191,27 @@ defmodule ExOAPI.Stripe.SDK.Radar do
 
   """
 
-  @spec post_radar_value_lists(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_radar_value_lists(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :name => String.t(),
+              :metadata => map(),
+              :item_type =>
+                String.t()
+                | :card_bin
+                | :card_fingerprint
+                | :case_sensitive_string
+                | :country
+                | :customer_id
+                | :email
+                | :ip_address
+                | :string,
+              :expand => [String.t()],
+              :alias => String.t()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_radar_value_lists(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -232,7 +261,7 @@ defmodule ExOAPI.Stripe.SDK.Radar do
 
   @spec delete_radar_value_list_items_item(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           item :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_radar_value_list_items_item(%ExOAPI.Client{} = client, body, item) do

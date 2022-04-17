@@ -6,7 +6,17 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_refunds(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :reverse_transfer => boolean(),
+              :refund_application_fee => boolean(),
+              :reason => String.t() | :duplicate | :fraudulent | :requested_by_customer,
+              :payment_intent => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :amount => integer()
+            }
+            | map(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge_refunds(%ExOAPI.Client{} = client, body, charge) do
@@ -59,7 +69,19 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_capture(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :transfer_group => String.t(),
+              :transfer_data => %{:amount => integer()},
+              :statement_descriptor_suffix => String.t(),
+              :statement_descriptor => String.t(),
+              :receipt_email => String.t(),
+              :expand => [String.t()],
+              :application_fee_amount => integer(),
+              :application_fee => integer(),
+              :amount => integer()
+            }
+            | map(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge_capture(%ExOAPI.Client{} = client, body, charge) do
@@ -75,7 +97,7 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_dispute_close(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge_dispute_close(%ExOAPI.Client{} = client, body, charge) do
@@ -106,7 +128,17 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_refund(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :reverse_transfer => boolean(),
+              :refund_application_fee => boolean(),
+              :reason => String.t() | :duplicate | :fraudulent | :requested_by_customer,
+              :payment_intent => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :amount => integer()
+            }
+            | map(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge_refund(%ExOAPI.Client{} = client, body, charge) do
@@ -127,7 +159,7 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_refunds_refund(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           refund :: String.t(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -173,7 +205,61 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   """
 
-  @spec post_charges(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_charges(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_group => String.t(),
+              :transfer_data => %{:destination => String.t(), :amount => integer()},
+              :statement_descriptor_suffix => String.t(),
+              :statement_descriptor => String.t(),
+              :source => String.t(),
+              :shipping => %{
+                :tracking_number => String.t(),
+                :phone => String.t(),
+                :name => String.t(),
+                :carrier => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :receipt_email => String.t(),
+              :on_behalf_of => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :destination => String.t() | %{:amount => integer(), :account => String.t()},
+              :description => String.t(),
+              :customer => String.t(),
+              :currency => String.t(),
+              :card =>
+                String.t()
+                | %{
+                    :object => String.t() | :card,
+                    :number => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t(),
+                    :address_zip => String.t(),
+                    :address_state => String.t(),
+                    :address_line2 => String.t(),
+                    :address_line1 => String.t(),
+                    :address_country => String.t(),
+                    :address_city => String.t()
+                  },
+              :capture => boolean(),
+              :application_fee_amount => integer(),
+              :application_fee => integer(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_charges(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -223,8 +309,35 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   """
 
-  @spec post_charges_charge(client :: ExOAPI.Client.t(), body :: map(), charge :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_charges_charge(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_group => String.t(),
+              :shipping => %{
+                :tracking_number => String.t(),
+                :phone => String.t(),
+                :name => String.t(),
+                :carrier => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :receipt_email => String.t(),
+              :metadata => String.t() | map(),
+              :fraud_details => %{:user_report => String.t() | :fraudulent | :safe},
+              :expand => [String.t()],
+              :description => String.t(),
+              :customer => String.t()
+            }
+            | map(),
+          charge :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -290,7 +403,42 @@ defmodule ExOAPI.Stripe.SDK.Charges do
 
   @spec post_charges_charge_dispute(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :submit => boolean(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :evidence => %{
+                :uncategorized_text => String.t(),
+                :uncategorized_file => String.t(),
+                :shipping_tracking_number => String.t(),
+                :shipping_documentation => String.t(),
+                :shipping_date => String.t(),
+                :shipping_carrier => String.t(),
+                :shipping_address => String.t(),
+                :service_documentation => String.t(),
+                :service_date => String.t(),
+                :refund_refusal_explanation => String.t(),
+                :refund_policy_disclosure => String.t(),
+                :refund_policy => String.t(),
+                :receipt => String.t(),
+                :product_description => String.t(),
+                :duplicate_charge_id => String.t(),
+                :duplicate_charge_explanation => String.t(),
+                :duplicate_charge_documentation => String.t(),
+                :customer_signature => String.t(),
+                :customer_purchase_ip => String.t(),
+                :customer_name => String.t(),
+                :customer_email_address => String.t(),
+                :customer_communication => String.t(),
+                :cancellation_rebuttal => String.t(),
+                :cancellation_policy_disclosure => String.t(),
+                :cancellation_policy => String.t(),
+                :billing_address => String.t(),
+                :access_activity_log => String.t()
+              }
+            }
+            | map(),
           charge :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_charges_charge_dispute(%ExOAPI.Client{} = client, body, charge) do

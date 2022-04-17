@@ -4,8 +4,17 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
 
   """
 
-  @spec post_file_links(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_file_links(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :file => String.t(),
+              :expires_at => integer(),
+              :expand => [String.t()]
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_file_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -53,8 +62,17 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
 
   """
 
-  @spec post_file_links_link(client :: ExOAPI.Client.t(), body :: map(), link :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_file_links_link(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expires_at => String.t() | integer() | String.t() | :now,
+              :expand => [String.t()]
+            }
+            | map(),
+          link :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_file_links_link(%ExOAPI.Client{} = client, body, link) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

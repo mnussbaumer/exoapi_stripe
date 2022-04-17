@@ -6,7 +6,13 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
 
   @spec delete_subscription_items_item(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :proration_date => integer(),
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :clear_usage => boolean()
+            }
+            | map(),
           item :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_subscription_items_item(%ExOAPI.Client{} = client, body, item) do
@@ -27,7 +33,36 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
 
   @spec post_subscription_items_item(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :tax_rates => String.t() | [String.t()],
+              :quantity => integer(),
+              :proration_date => integer(),
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :price_data => %{
+                :unit_amount_decimal => String.t(),
+                :unit_amount => integer(),
+                :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                :recurring => %{
+                  :interval_count => integer(),
+                  :interval => String.t() | :day | :month | :week | :year
+                },
+                :product => String.t(),
+                :currency => String.t()
+              },
+              :price => String.t(),
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :off_session => boolean(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :billing_thresholds => String.t() | %{:usage_gte => integer()}
+            }
+            | map(),
           item :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_subscription_items_item(%ExOAPI.Client{} = client, body, item) do
@@ -77,7 +112,14 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
 
   @spec post_subscription_items_subscription_item_usage_records(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :timestamp => integer() | String.t() | :now,
+              :quantity => integer(),
+              :expand => [String.t()],
+              :action => String.t() | :increment | :set
+            }
+            | map(),
           subscription_item :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_subscription_items_subscription_item_usage_records(
@@ -100,8 +142,39 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
 
   """
 
-  @spec post_subscription_items(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_subscription_items(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :tax_rates => String.t() | [String.t()],
+              :subscription => String.t(),
+              :quantity => integer(),
+              :proration_date => integer(),
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :price_data => %{
+                :unit_amount_decimal => String.t(),
+                :unit_amount => integer(),
+                :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                :recurring => %{
+                  :interval_count => integer(),
+                  :interval => String.t() | :day | :month | :week | :year
+                },
+                :product => String.t(),
+                :currency => String.t()
+              },
+              :price => String.t(),
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :metadata => map(),
+              :expand => [String.t()],
+              :billing_thresholds => String.t() | %{:usage_gte => integer()}
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_subscription_items(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -6,7 +6,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_bank_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -29,7 +29,36 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_bank_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :owner => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :exp_year => String.t(),
+              :exp_month => String.t(),
+              :address_zip => String.t(),
+              :address_state => String.t(),
+              :address_line2 => String.t(),
+              :address_line1 => String.t(),
+              :address_country => String.t(),
+              :address_city => String.t(),
+              :account_holder_type => String.t() | :company | :individual,
+              :account_holder_name => String.t()
+            }
+            | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -79,7 +108,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_discount(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_customers_customer_discount(%ExOAPI.Client{} = client, body, customer) do
@@ -123,7 +152,42 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_bank_accounts(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :source => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :card =>
+                String.t()
+                | %{
+                    :object => String.t() | :card,
+                    :number => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t(),
+                    :address_zip => String.t(),
+                    :address_state => String.t(),
+                    :address_line2 => String.t(),
+                    :address_line1 => String.t(),
+                    :address_country => String.t(),
+                    :address_city => String.t()
+                  },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :alipay_account => String.t()
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_bank_accounts(%ExOAPI.Client{} = client, body, customer) do
@@ -180,7 +244,42 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_sources(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :source => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :card =>
+                String.t()
+                | %{
+                    :object => String.t() | :card,
+                    :number => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t(),
+                    :address_zip => String.t(),
+                    :address_state => String.t(),
+                    :address_line2 => String.t(),
+                    :address_line1 => String.t(),
+                    :address_country => String.t(),
+                    :address_city => String.t()
+                  },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :alipay_account => String.t()
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_sources(%ExOAPI.Client{} = client, body, customer) do
@@ -233,7 +332,138 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_subscriptions(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :trial_period_days => integer(),
+              :trial_from_plan => boolean(),
+              :trial_end => integer() | String.t() | :now,
+              :transfer_data => %{:destination => String.t(), :amount_percent => number()},
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :promotion_code => String.t(),
+              :pending_invoice_item_interval =>
+                String.t()
+                | %{
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :week | :year
+                  },
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t()
+                    | %{
+                        :request_three_d_secure => String.t() | :any | :automatic,
+                        :mandate_options => %{
+                          :description => String.t(),
+                          :amount_type => String.t() | :fixed | :maximum,
+                          :amount => integer()
+                        }
+                      },
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :off_session => boolean(),
+              :metadata => String.t() | map(),
+              :items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t(),
+                  :metadata => map(),
+                  :billing_thresholds => String.t() | %{:usage_gte => integer()}
+                }
+              ],
+              :expand => [String.t()],
+              :default_tax_rates => String.t() | [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :coupon => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :cancel_at_period_end => boolean(),
+              :cancel_at => integer(),
+              :billing_thresholds =>
+                String.t() | %{:reset_billing_cycle_anchor => boolean(), :amount_gte => integer()},
+              :billing_cycle_anchor => integer(),
+              :backdate_start_date => integer(),
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => number(),
+              :add_invoice_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t()
+                }
+              ]
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_subscriptions(%ExOAPI.Client{} = client, body, customer) do
@@ -284,7 +514,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_tax_ids_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -336,7 +566,8 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_subscriptions_subscription_exposed_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:prorate => boolean(), :invoice_now => boolean(), :expand => [String.t()]} | map(),
           subscription_exposed_id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -364,7 +595,147 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_subscriptions_subscription_exposed_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :trial_from_plan => boolean(),
+              :trial_end => integer() | String.t() | :now,
+              :transfer_data =>
+                String.t() | %{:destination => String.t(), :amount_percent => number()},
+              :proration_date => integer(),
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :promotion_code => String.t(),
+              :pending_invoice_item_interval =>
+                String.t()
+                | %{
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :week | :year
+                  },
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t()
+                    | %{
+                        :request_three_d_secure => String.t() | :any | :automatic,
+                        :mandate_options => %{
+                          :description => String.t(),
+                          :amount_type => String.t() | :fixed | :maximum,
+                          :amount => integer()
+                        }
+                      },
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :pause_collection =>
+                String.t()
+                | %{
+                    :resumes_at => integer(),
+                    :behavior => String.t() | :keep_as_draft | :mark_uncollectible | :void
+                  },
+              :off_session => boolean(),
+              :metadata => String.t() | map(),
+              :items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t(),
+                  :metadata => String.t() | map(),
+                  :id => String.t(),
+                  :deleted => boolean(),
+                  :clear_usage => boolean(),
+                  :billing_thresholds => String.t() | %{:usage_gte => integer()}
+                }
+              ],
+              :expand => [String.t()],
+              :default_tax_rates => String.t() | [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :coupon => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :cancel_at_period_end => boolean(),
+              :cancel_at => String.t() | integer(),
+              :billing_thresholds =>
+                String.t() | %{:reset_billing_cycle_anchor => boolean(), :amount_gte => integer()},
+              :billing_cycle_anchor => String.t() | :now | :unchanged,
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => number(),
+              :add_invoice_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t()
+                }
+              ]
+            }
+            | map(),
           subscription_exposed_id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -426,7 +797,42 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_cards(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :source => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :card =>
+                String.t()
+                | %{
+                    :object => String.t() | :card,
+                    :number => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t(),
+                    :address_zip => String.t(),
+                    :address_state => String.t(),
+                    :address_line2 => String.t(),
+                    :address_line1 => String.t(),
+                    :address_country => String.t(),
+                    :address_city => String.t()
+                  },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :alipay_account => String.t()
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_cards(%ExOAPI.Client{} = client, body, customer) do
@@ -481,7 +887,13 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_balance_transactions_transaction(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t()
+            }
+            | map(),
           transaction :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -539,7 +951,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_sources_id_verify(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()], :amounts => [integer()]} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -562,7 +974,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_bank_accounts_id_verify(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()], :amounts => [integer()]} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -619,7 +1031,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_subscriptions_subscription_exposed_id_discount(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           subscription_exposed_id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -678,7 +1090,15 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_balance_transactions(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_balance_transactions(%ExOAPI.Client{} = client, body, customer) do
@@ -729,7 +1149,59 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_tax_ids(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :value => String.t(),
+              :type =>
+                String.t()
+                | :ae_trn
+                | :au_abn
+                | :au_arn
+                | :bg_uic
+                | :br_cnpj
+                | :br_cpf
+                | :ca_bn
+                | :ca_gst_hst
+                | :ca_pst_bc
+                | :ca_pst_mb
+                | :ca_pst_sk
+                | :ca_qst
+                | :ch_vat
+                | :cl_tin
+                | :es_cif
+                | :eu_vat
+                | :gb_vat
+                | :ge_vat
+                | :hk_br
+                | :hu_tin
+                | :id_npwp
+                | :il_vat
+                | :in_gst
+                | :is_vat
+                | :jp_cn
+                | :jp_rn
+                | :kr_brn
+                | :li_uid
+                | :mx_rfc
+                | :my_frp
+                | :my_itn
+                | :my_sst
+                | :no_vat
+                | :nz_gst
+                | :ru_inn
+                | :ru_kpp
+                | :sa_vat
+                | :sg_gst
+                | :sg_uen
+                | :si_tin
+                | :th_vat
+                | :tw_vat
+                | :ua_vat
+                | :us_ein
+                | :za_vat,
+              :expand => [String.t()]
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_tax_ids(%ExOAPI.Client{} = client, body, customer) do
@@ -780,7 +1252,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_sources_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -803,7 +1275,36 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_sources_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :owner => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :exp_year => String.t(),
+              :exp_month => String.t(),
+              :address_zip => String.t(),
+              :address_state => String.t(),
+              :address_line2 => String.t(),
+              :address_line1 => String.t(),
+              :address_country => String.t(),
+              :address_city => String.t(),
+              :account_holder_type => String.t() | :company | :individual,
+              :account_holder_name => String.t()
+            }
+            | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -849,8 +1350,114 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   """
 
-  @spec post_customers(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_customers(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :test_clock => String.t(),
+              :tax_id_data => [
+                %{
+                  :value => String.t(),
+                  :type =>
+                    String.t()
+                    | :ae_trn
+                    | :au_abn
+                    | :au_arn
+                    | :bg_uic
+                    | :br_cnpj
+                    | :br_cpf
+                    | :ca_bn
+                    | :ca_gst_hst
+                    | :ca_pst_bc
+                    | :ca_pst_mb
+                    | :ca_pst_sk
+                    | :ca_qst
+                    | :ch_vat
+                    | :cl_tin
+                    | :es_cif
+                    | :eu_vat
+                    | :gb_vat
+                    | :ge_vat
+                    | :hk_br
+                    | :hu_tin
+                    | :id_npwp
+                    | :il_vat
+                    | :in_gst
+                    | :is_vat
+                    | :jp_cn
+                    | :jp_rn
+                    | :kr_brn
+                    | :li_uid
+                    | :mx_rfc
+                    | :my_frp
+                    | :my_itn
+                    | :my_sst
+                    | :no_vat
+                    | :nz_gst
+                    | :ru_inn
+                    | :ru_kpp
+                    | :sa_vat
+                    | :sg_gst
+                    | :sg_uen
+                    | :si_tin
+                    | :th_vat
+                    | :tw_vat
+                    | :ua_vat
+                    | :us_ein
+                    | :za_vat
+                }
+              ],
+              :tax_exempt => String.t() | :exempt | :none | :reverse,
+              :tax => %{:ip_address => String.t()},
+              :source => String.t(),
+              :shipping =>
+                String.t()
+                | %{
+                    :phone => String.t(),
+                    :name => String.t(),
+                    :address => %{
+                      :state => String.t(),
+                      :postal_code => String.t(),
+                      :line2 => String.t(),
+                      :line1 => String.t(),
+                      :country => String.t(),
+                      :city => String.t()
+                    }
+                  },
+              :promotion_code => String.t(),
+              :preferred_locales => [String.t()],
+              :phone => String.t(),
+              :payment_method => String.t(),
+              :next_invoice_sequence => integer(),
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :invoice_settings => %{
+                :footer => String.t(),
+                :default_payment_method => String.t(),
+                :custom_fields => String.t() | [%{:value => String.t(), :name => String.t()}]
+              },
+              :invoice_prefix => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :description => String.t(),
+              :coupon => String.t(),
+              :cash_balance => %{
+                :settings => %{:reconciliation_mode => String.t() | :automatic | :manual}
+              },
+              :balance => integer(),
+              :address =>
+                String.t()
+                | %{
+                    :state => String.t(),
+                    :postal_code => String.t(),
+                    :line2 => String.t(),
+                    :line1 => String.t(),
+                    :country => String.t(),
+                    :city => String.t()
+                  }
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_customers(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -937,7 +1544,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer_cards_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -960,7 +1567,36 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_cards_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :owner => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :exp_year => String.t(),
+              :exp_month => String.t(),
+              :address_zip => String.t(),
+              :address_state => String.t(),
+              :address_line2 => String.t(),
+              :address_line1 => String.t(),
+              :address_country => String.t(),
+              :address_city => String.t(),
+              :account_holder_type => String.t() | :company | :individual,
+              :account_holder_name => String.t()
+            }
+            | map(),
           id :: String.t(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -1010,7 +1646,7 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec delete_customers_customer(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_customers_customer(%ExOAPI.Client{} = client, body, customer) do
@@ -1033,7 +1669,90 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :trial_end => integer() | String.t() | :now,
+              :tax_exempt => String.t() | :exempt | :none | :reverse,
+              :tax => %{:ip_address => String.t()},
+              :source => String.t(),
+              :shipping =>
+                String.t()
+                | %{
+                    :phone => String.t(),
+                    :name => String.t(),
+                    :address => %{
+                      :state => String.t(),
+                      :postal_code => String.t(),
+                      :line2 => String.t(),
+                      :line1 => String.t(),
+                      :country => String.t(),
+                      :city => String.t()
+                    }
+                  },
+              :promotion_code => String.t(),
+              :preferred_locales => [String.t()],
+              :phone => String.t(),
+              :next_invoice_sequence => integer(),
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :invoice_settings => %{
+                :footer => String.t(),
+                :default_payment_method => String.t(),
+                :custom_fields => String.t() | [%{:value => String.t(), :name => String.t()}]
+              },
+              :invoice_prefix => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :description => String.t(),
+              :default_source => String.t(),
+              :default_card => String.t(),
+              :default_bank_account => String.t(),
+              :default_alipay_account => String.t(),
+              :coupon => String.t(),
+              :cash_balance => %{
+                :settings => %{:reconciliation_mode => String.t() | :automatic | :manual}
+              },
+              :card =>
+                String.t()
+                | %{
+                    :object => String.t() | :card,
+                    :number => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t(),
+                    :address_zip => String.t(),
+                    :address_state => String.t(),
+                    :address_line2 => String.t(),
+                    :address_line1 => String.t(),
+                    :address_country => String.t(),
+                    :address_city => String.t()
+                  },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :balance => integer(),
+              :address =>
+                String.t()
+                | %{
+                    :state => String.t(),
+                    :postal_code => String.t(),
+                    :line2 => String.t(),
+                    :line1 => String.t(),
+                    :country => String.t(),
+                    :city => String.t()
+                  }
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer(%ExOAPI.Client{} = client, body, customer) do
@@ -1079,7 +1798,17 @@ defmodule ExOAPI.Stripe.SDK.Customers do
 
   @spec post_customers_customer_funding_instructions(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :funding_type => String.t() | :bank_transfer,
+              :expand => [String.t()],
+              :currency => String.t(),
+              :bank_transfer => %{
+                :type => String.t() | :jp_bank_transfer,
+                :requested_address_types => [String.t() | :zengin]
+              }
+            }
+            | map(),
           customer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_customers_customer_funding_instructions(%ExOAPI.Client{} = client, body, customer) do

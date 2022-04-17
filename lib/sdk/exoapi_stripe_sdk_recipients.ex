@@ -6,7 +6,7 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
 
   """
 
-  @spec delete_recipients_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
+  @spec delete_recipients_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
           {:ok, any()} | {:error, any()}
   def delete_recipients_id(%ExOAPI.Client{} = client, body, id) do
     client
@@ -30,8 +30,23 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
 
   """
 
-  @spec post_recipients_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_recipients_id(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :tax_id => String.t(),
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :description => String.t(),
+              :default_card => String.t(),
+              :card => String.t(),
+              :bank_account => String.t()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_recipients_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -76,8 +91,22 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
 
   """
 
-  @spec post_recipients(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_recipients(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :type => String.t(),
+              :tax_id => String.t(),
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :description => String.t(),
+              :card => String.t(),
+              :bank_account => String.t()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_recipients(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

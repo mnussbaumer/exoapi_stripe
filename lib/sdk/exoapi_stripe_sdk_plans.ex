@@ -4,7 +4,7 @@ defmodule ExOAPI.Stripe.SDK.Plans do
 
   """
 
-  @spec delete_plans_plan(client :: ExOAPI.Client.t(), body :: map(), plan :: String.t()) ::
+  @spec delete_plans_plan(client :: ExOAPI.Client.t(), body :: %{} | map(), plan :: String.t()) ::
           {:ok, any()} | {:error, any()}
   def delete_plans_plan(%ExOAPI.Client{} = client, body, plan) do
     client
@@ -22,8 +22,20 @@ defmodule ExOAPI.Stripe.SDK.Plans do
 
   """
 
-  @spec post_plans_plan(client :: ExOAPI.Client.t(), body :: map(), plan :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_plans_plan(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :trial_period_days => integer(),
+              :product => String.t(),
+              :nickname => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :active => boolean()
+            }
+            | map(),
+          plan :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_plans_plan(%ExOAPI.Client{} = client, body, plan) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -63,7 +75,49 @@ defmodule ExOAPI.Stripe.SDK.Plans do
 
   """
 
-  @spec post_plans(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_plans(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :usage_type => String.t() | :licensed | :metered,
+              :trial_period_days => integer(),
+              :transform_usage => %{:round => String.t() | :down | :up, :divide_by => integer()},
+              :tiers_mode => String.t() | :graduated | :volume,
+              :tiers => [
+                %{
+                  :up_to => integer() | String.t() | :inf,
+                  :unit_amount_decimal => String.t(),
+                  :unit_amount => integer(),
+                  :flat_amount_decimal => String.t(),
+                  :flat_amount => integer()
+                }
+              ],
+              :product =>
+                String.t()
+                | %{
+                    :unit_label => String.t(),
+                    :tax_code => String.t(),
+                    :statement_descriptor => String.t(),
+                    :name => String.t(),
+                    :metadata => map(),
+                    :id => String.t(),
+                    :active => boolean()
+                  },
+              :nickname => String.t(),
+              :metadata => String.t() | map(),
+              :interval_count => integer(),
+              :interval => String.t() | :day | :month | :week | :year,
+              :id => String.t(),
+              :expand => [String.t()],
+              :currency => String.t(),
+              :billing_scheme => String.t() | :per_unit | :tiered,
+              :amount_decimal => String.t(),
+              :amount => integer(),
+              :aggregate_usage => String.t() | :last_during_period | :last_ever | :max | :sum,
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_plans(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

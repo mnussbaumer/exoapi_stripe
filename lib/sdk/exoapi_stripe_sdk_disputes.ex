@@ -40,7 +40,7 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
 
   @spec post_disputes_dispute_close(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           dispute :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_disputes_dispute_close(%ExOAPI.Client{} = client, body, dispute) do
@@ -61,8 +61,46 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
 
   """
 
-  @spec post_disputes_dispute(client :: ExOAPI.Client.t(), body :: map(), dispute :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_disputes_dispute(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :submit => boolean(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :evidence => %{
+                :uncategorized_text => String.t(),
+                :uncategorized_file => String.t(),
+                :shipping_tracking_number => String.t(),
+                :shipping_documentation => String.t(),
+                :shipping_date => String.t(),
+                :shipping_carrier => String.t(),
+                :shipping_address => String.t(),
+                :service_documentation => String.t(),
+                :service_date => String.t(),
+                :refund_refusal_explanation => String.t(),
+                :refund_policy_disclosure => String.t(),
+                :refund_policy => String.t(),
+                :receipt => String.t(),
+                :product_description => String.t(),
+                :duplicate_charge_id => String.t(),
+                :duplicate_charge_explanation => String.t(),
+                :duplicate_charge_documentation => String.t(),
+                :customer_signature => String.t(),
+                :customer_purchase_ip => String.t(),
+                :customer_name => String.t(),
+                :customer_email_address => String.t(),
+                :customer_communication => String.t(),
+                :cancellation_rebuttal => String.t(),
+                :cancellation_policy_disclosure => String.t(),
+                :cancellation_policy => String.t(),
+                :billing_address => String.t(),
+                :access_activity_log => String.t()
+              }
+            }
+            | map(),
+          dispute :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_disputes_dispute(%ExOAPI.Client{} = client, body, dispute) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

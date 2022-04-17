@@ -6,7 +6,7 @@ defmodule ExOAPI.Stripe.SDK.Sources do
 
   @spec post_sources_source_verify(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:values => [String.t()], :expand => [String.t()]} | map(),
           source :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_sources_source_verify(%ExOAPI.Client{} = client, body, source) do
@@ -58,8 +58,72 @@ defmodule ExOAPI.Stripe.SDK.Sources do
 
   """
 
-  @spec post_sources_source(client :: ExOAPI.Client.t(), body :: map(), source :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_sources_source(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :source_order => %{
+                :shipping => %{
+                  :tracking_number => String.t(),
+                  :phone => String.t(),
+                  :name => String.t(),
+                  :carrier => String.t(),
+                  :address => %{
+                    :state => String.t(),
+                    :postal_code => String.t(),
+                    :line2 => String.t(),
+                    :line1 => String.t(),
+                    :country => String.t(),
+                    :city => String.t()
+                  }
+                },
+                :items => [
+                  %{
+                    :type => String.t() | :discount | :shipping | :sku | :tax,
+                    :quantity => integer(),
+                    :parent => String.t(),
+                    :description => String.t(),
+                    :currency => String.t(),
+                    :amount => integer()
+                  }
+                ]
+              },
+              :owner => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :metadata => String.t() | map(),
+              :mandate => %{
+                :notification_method =>
+                  String.t() | :deprecated_none | :email | :manual | :none | :stripe_email,
+                :interval => String.t() | :one_time | :scheduled | :variable,
+                :currency => String.t(),
+                :amount => String.t() | integer(),
+                :acceptance => %{
+                  :user_agent => String.t(),
+                  :type => String.t() | :offline | :online,
+                  :status => String.t() | :accepted | :pending | :refused | :revoked,
+                  :online => %{:user_agent => String.t(), :ip => String.t(), :date => integer()},
+                  :offline => %{:contact_email => String.t()},
+                  :ip => String.t(),
+                  :date => integer()
+                }
+              },
+              :expand => [String.t()],
+              :amount => integer()
+            }
+            | map(),
+          source :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_sources_source(%ExOAPI.Client{} = client, body, source) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -100,7 +164,81 @@ defmodule ExOAPI.Stripe.SDK.Sources do
 
   """
 
-  @spec post_sources(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_sources(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :usage => String.t() | :reusable | :single_use,
+              :type => String.t(),
+              :token => String.t(),
+              :statement_descriptor => String.t(),
+              :source_order => %{
+                :shipping => %{
+                  :tracking_number => String.t(),
+                  :phone => String.t(),
+                  :name => String.t(),
+                  :carrier => String.t(),
+                  :address => %{
+                    :state => String.t(),
+                    :postal_code => String.t(),
+                    :line2 => String.t(),
+                    :line1 => String.t(),
+                    :country => String.t(),
+                    :city => String.t()
+                  }
+                },
+                :items => [
+                  %{
+                    :type => String.t() | :discount | :shipping | :sku | :tax,
+                    :quantity => integer(),
+                    :parent => String.t(),
+                    :description => String.t(),
+                    :currency => String.t(),
+                    :amount => integer()
+                  }
+                ]
+              },
+              :redirect => %{:return_url => String.t()},
+              :receiver => %{:refund_attributes_method => String.t() | :email | :manual | :none},
+              :owner => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :original_source => String.t(),
+              :metadata => map(),
+              :mandate => %{
+                :notification_method =>
+                  String.t() | :deprecated_none | :email | :manual | :none | :stripe_email,
+                :interval => String.t() | :one_time | :scheduled | :variable,
+                :currency => String.t(),
+                :amount => String.t() | integer(),
+                :acceptance => %{
+                  :user_agent => String.t(),
+                  :type => String.t() | :offline | :online,
+                  :status => String.t() | :accepted | :pending | :refused | :revoked,
+                  :online => %{:user_agent => String.t(), :ip => String.t(), :date => integer()},
+                  :offline => %{:contact_email => String.t()},
+                  :ip => String.t(),
+                  :date => integer()
+                }
+              },
+              :flow => String.t() | :code_verification | :none | :receiver | :redirect,
+              :expand => [String.t()],
+              :customer => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_sources(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

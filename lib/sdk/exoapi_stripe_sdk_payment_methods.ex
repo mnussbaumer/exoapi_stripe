@@ -6,8 +6,195 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
 
   """
 
-  @spec post_payment_methods(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_payment_methods(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :wechat_pay => %{},
+              :us_bank_account => %{
+                :routing_number => String.t(),
+                :account_type => String.t() | :checking | :savings,
+                :account_number => String.t(),
+                :account_holder_type => String.t() | :company | :individual
+              },
+              :type =>
+                String.t()
+                | :acss_debit
+                | :afterpay_clearpay
+                | :alipay
+                | :au_becs_debit
+                | :bacs_debit
+                | :bancontact
+                | :boleto
+                | :card
+                | :customer_balance
+                | :eps
+                | :fpx
+                | :giropay
+                | :grabpay
+                | :ideal
+                | :klarna
+                | :konbini
+                | :oxxo
+                | :p24
+                | :paynow
+                | :sepa_debit
+                | :sofort
+                | :us_bank_account
+                | :wechat_pay,
+              :sofort => %{:country => String.t() | :AT | :BE | :DE | :ES | :IT | :NL},
+              :sepa_debit => %{:iban => String.t()},
+              :paynow => %{},
+              :payment_method => String.t(),
+              :p24 => %{
+                :bank =>
+                  String.t()
+                  | :alior_bank
+                  | :bank_millennium
+                  | :bank_nowy_bfg_sa
+                  | :bank_pekao_sa
+                  | :banki_spbdzielcze
+                  | :blik
+                  | :bnp_paribas
+                  | :boz
+                  | :citi_handlowy
+                  | :credit_agricole
+                  | :envelobank
+                  | :etransfer_pocztowy24
+                  | :getin_bank
+                  | :ideabank
+                  | :ing
+                  | :inteligo
+                  | :mbank_mtransfer
+                  | :nest_przelew
+                  | :noble_pay
+                  | :pbac_z_ipko
+                  | :plus_bank
+                  | :santander_przelew24
+                  | :tmobile_usbugi_bankowe
+                  | :toyota_bank
+                  | :volkswagen_bank
+              },
+              :oxxo => %{},
+              :metadata => map(),
+              :konbini => %{},
+              :klarna => %{:dob => %{:year => integer(), :month => integer(), :day => integer()}},
+              :interac_present => %{},
+              :ideal => %{
+                :bank =>
+                  String.t()
+                  | :abn_amro
+                  | :asn_bank
+                  | :bunq
+                  | :handelsbanken
+                  | :ing
+                  | :knab
+                  | :moneyou
+                  | :rabobank
+                  | :regiobank
+                  | :revolut
+                  | :sns_bank
+                  | :triodos_bank
+                  | :van_lanschot
+              },
+              :grabpay => %{},
+              :giropay => %{},
+              :fpx => %{
+                :bank =>
+                  String.t()
+                  | :affin_bank
+                  | :agrobank
+                  | :alliance_bank
+                  | :ambank
+                  | :bank_islam
+                  | :bank_muamalat
+                  | :bank_rakyat
+                  | :bsn
+                  | :cimb
+                  | :deutsche_bank
+                  | :hong_leong_bank
+                  | :hsbc
+                  | :kfh
+                  | :maybank2e
+                  | :maybank2u
+                  | :ocbc
+                  | :pb_enterprise
+                  | :public_bank
+                  | :rhb
+                  | :standard_chartered
+                  | :uob
+              },
+              :expand => [String.t()],
+              :eps => %{
+                :bank =>
+                  String.t()
+                  | :arzte_und_apotheker_bank
+                  | :austrian_anadi_bank_ag
+                  | :bank_austria
+                  | :bankhaus_carl_spangler
+                  | :bankhaus_schelhammer_und_schattera_ag
+                  | :bawag_psk_ag
+                  | :bks_bank_ag
+                  | :brull_kallmus_bank_ag
+                  | :btv_vier_lander_bank
+                  | :capital_bank_grawe_gruppe_ag
+                  | :dolomitenbank
+                  | :easybank_ag
+                  | :erste_bank_und_sparkassen
+                  | :hypo_alpeadriabank_international_ag
+                  | :hypo_bank_burgenland_aktiengesellschaft
+                  | :hypo_noe_lb_fur_niederosterreich_u_wien
+                  | :hypo_oberosterreich_salzburg_steiermark
+                  | :hypo_tirol_bank_ag
+                  | :hypo_vorarlberg_bank_ag
+                  | :marchfelder_bank
+                  | :oberbank_ag
+                  | :raiffeisen_bankengruppe_osterreich
+                  | :schoellerbank_ag
+                  | :sparda_bank_wien
+                  | :volksbank_gruppe
+                  | :volkskreditbank_ag
+                  | :vr_bank_braunau
+              },
+              :customer_balance => %{},
+              :customer => String.t(),
+              :card =>
+                %{:token => String.t()}
+                | %{
+                    :number => String.t(),
+                    :exp_year => integer(),
+                    :exp_month => integer(),
+                    :cvc => String.t()
+                  },
+              :boleto => %{:tax_id => String.t()},
+              :billing_details => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address =>
+                  String.t()
+                  | %{
+                      :state => String.t(),
+                      :postal_code => String.t(),
+                      :line2 => String.t(),
+                      :line1 => String.t(),
+                      :country => String.t(),
+                      :city => String.t()
+                    }
+              },
+              :bancontact => %{},
+              :bacs_debit => %{:sort_code => String.t(), :account_number => String.t()},
+              :au_becs_debit => %{:bsb_number => String.t(), :account_number => String.t()},
+              :alipay => %{},
+              :afterpay_clearpay => %{},
+              :acss_debit => %{
+                :transit_number => String.t(),
+                :institution_number => String.t(),
+                :account_number => String.t()
+              }
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_payment_methods(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -67,7 +254,7 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
 
   @spec post_payment_methods_payment_method_attach(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()], :customer => String.t()} | map(),
           payment_method :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payment_methods_payment_method_attach(%ExOAPI.Client{} = client, body, payment_method) do
@@ -88,7 +275,29 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
 
   @spec post_payment_methods_payment_method(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :us_bank_account => %{:account_holder_type => String.t() | :company | :individual},
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :card => %{:exp_year => integer(), :exp_month => integer()},
+              :billing_details => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :email => String.t(),
+                :address =>
+                  String.t()
+                  | %{
+                      :state => String.t(),
+                      :postal_code => String.t(),
+                      :line2 => String.t(),
+                      :line1 => String.t(),
+                      :country => String.t(),
+                      :city => String.t()
+                    }
+              }
+            }
+            | map(),
           payment_method :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payment_methods_payment_method(%ExOAPI.Client{} = client, body, payment_method) do
@@ -132,7 +341,7 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
 
   @spec post_payment_methods_payment_method_detach(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           payment_method :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payment_methods_payment_method_detach(%ExOAPI.Client{} = client, body, payment_method) do

@@ -4,8 +4,11 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
 
   """
 
-  @spec post_quotes_quote_accept(client :: ExOAPI.Client.t(), body :: map(), quote :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_quotes_quote_accept(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()]} | map(),
+          quote :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_quotes_quote_accept(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -22,8 +25,55 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
 
   """
 
-  @spec post_quotes_quote(client :: ExOAPI.Client.t(), body :: map(), quote :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_quotes_quote(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_data =>
+                String.t()
+                | %{:destination => String.t(), :amount_percent => number(), :amount => integer()},
+              :subscription_data => %{
+                :trial_period_days => String.t() | integer(),
+                :effective_date => String.t() | integer() | String.t() | :current_period_end
+              },
+              :on_behalf_of => String.t(),
+              :metadata => map(),
+              :line_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t(),
+                  :id => String.t()
+                }
+              ],
+              :invoice_settings => %{:days_until_due => integer()},
+              :header => String.t(),
+              :footer => String.t(),
+              :expires_at => integer(),
+              :expand => [String.t()],
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :description => String.t(),
+              :default_tax_rates => String.t() | [String.t()],
+              :customer => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => String.t() | number(),
+              :application_fee_amount => String.t() | integer()
+            }
+            | map(),
+          quote :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_quotes_quote(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -116,8 +166,11 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
 
   """
 
-  @spec post_quotes_quote_cancel(client :: ExOAPI.Client.t(), body :: map(), quote :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_quotes_quote_cancel(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()]} | map(),
+          quote :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_quotes_quote_cancel(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -134,7 +187,55 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
 
   """
 
-  @spec post_quotes(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_quotes(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_data =>
+                String.t()
+                | %{:destination => String.t(), :amount_percent => number(), :amount => integer()},
+              :test_clock => String.t(),
+              :subscription_data => %{
+                :trial_period_days => String.t() | integer(),
+                :effective_date => String.t() | integer() | String.t() | :current_period_end
+              },
+              :on_behalf_of => String.t(),
+              :metadata => map(),
+              :line_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t()
+                }
+              ],
+              :invoice_settings => %{:days_until_due => integer()},
+              :header => String.t(),
+              :from_quote => %{:quote => String.t(), :is_revision => boolean()},
+              :footer => String.t(),
+              :expires_at => integer(),
+              :expand => [String.t()],
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :description => String.t(),
+              :default_tax_rates => String.t() | [String.t()],
+              :customer => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => String.t() | number(),
+              :application_fee_amount => String.t() | integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_quotes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -214,7 +315,7 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
 
   @spec post_quotes_quote_finalize(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expires_at => integer(), :expand => [String.t()]} | map(),
           quote :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_quotes_quote_finalize(%ExOAPI.Client{} = client, body, quote) do

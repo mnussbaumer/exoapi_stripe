@@ -8,7 +8,7 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
 
   @spec post_application_fees_fee_refunds_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           id :: String.t(),
           fee :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -64,7 +64,7 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
 
   @spec post_application_fees_id_refunds(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:metadata => map(), :expand => [String.t()], :amount => integer()} | map(),
           id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_application_fees_id_refunds(%ExOAPI.Client{} = client, body, id) do
@@ -110,7 +110,8 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
 
   @spec post_application_fees_id_refund(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:expand => [String.t()], :directive => String.t(), :amount => integer()} | map(),
           id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_application_fees_id_refund(%ExOAPI.Client{} = client, body, id) do

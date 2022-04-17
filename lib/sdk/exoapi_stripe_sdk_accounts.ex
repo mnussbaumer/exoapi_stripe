@@ -5,8 +5,255 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   """
 
-  @spec post_accounts(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_accounts(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :type => String.t() | :custom | :express | :standard,
+              :tos_acceptance => %{
+                :user_agent => String.t(),
+                :service_agreement => String.t(),
+                :ip => String.t(),
+                :date => integer()
+              },
+              :settings => %{
+                :payouts => %{
+                  :statement_descriptor => String.t(),
+                  :schedule => %{
+                    :weekly_anchor =>
+                      String.t()
+                      | :friday
+                      | :monday
+                      | :saturday
+                      | :sunday
+                      | :thursday
+                      | :tuesday
+                      | :wednesday,
+                    :monthly_anchor => integer(),
+                    :interval => String.t() | :daily | :manual | :monthly | :weekly,
+                    :delay_days => integer() | String.t() | :minimum
+                  },
+                  :debit_negative_balances => boolean()
+                },
+                :payments => %{
+                  :statement_descriptor_kanji => String.t(),
+                  :statement_descriptor_kana => String.t(),
+                  :statement_descriptor => String.t()
+                },
+                :card_payments => %{
+                  :statement_descriptor_prefix => String.t(),
+                  :decline_on => %{:cvc_failure => boolean(), :avs_failure => boolean()}
+                },
+                :card_issuing => %{
+                  :tos_acceptance => %{
+                    :user_agent => String.t(),
+                    :ip => String.t(),
+                    :date => integer()
+                  }
+                },
+                :branding => %{
+                  :secondary_color => String.t(),
+                  :primary_color => String.t(),
+                  :logo => String.t(),
+                  :icon => String.t()
+                }
+              },
+              :metadata => String.t() | map(),
+              :individual => %{
+                :verification => %{
+                  :document => %{:front => String.t(), :back => String.t()},
+                  :additional_document => %{:front => String.t(), :back => String.t()}
+                },
+                :ssn_last_4 => String.t(),
+                :political_exposure => String.t() | :existing | :none,
+                :phone => String.t(),
+                :metadata => String.t() | map(),
+                :maiden_name => String.t(),
+                :last_name_kanji => String.t(),
+                :last_name_kana => String.t(),
+                :last_name => String.t(),
+                :id_number => String.t(),
+                :gender => String.t(),
+                :full_name_aliases => String.t() | [String.t()],
+                :first_name_kanji => String.t(),
+                :first_name_kana => String.t(),
+                :first_name => String.t(),
+                :email => String.t(),
+                :dob =>
+                  String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+                :address_kanji => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address_kana => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :external_account => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :proof_of_registration => %{:files => [String.t()]},
+                :company_tax_id_verification => %{:files => [String.t()]},
+                :company_registration_verification => %{:files => [String.t()]},
+                :company_ministerial_decree => %{:files => [String.t()]},
+                :company_memorandum_of_association => %{:files => [String.t()]},
+                :company_license => %{:files => [String.t()]},
+                :bank_account_ownership_verification => %{:files => [String.t()]}
+              },
+              :default_currency => String.t(),
+              :country => String.t(),
+              :company => %{
+                :verification => %{:document => %{:front => String.t(), :back => String.t()}},
+                :vat_id => String.t(),
+                :tax_id_registrar => String.t(),
+                :tax_id => String.t(),
+                :structure =>
+                  String.t()
+                  | :free_zone_establishment
+                  | :free_zone_llc
+                  | :government_instrumentality
+                  | :governmental_unit
+                  | :incorporated_non_profit
+                  | :limited_liability_partnership
+                  | :llc
+                  | :multi_member_llc
+                  | :private_company
+                  | :private_corporation
+                  | :private_partnership
+                  | :public_company
+                  | :public_corporation
+                  | :public_partnership
+                  | :single_member_llc
+                  | :sole_establishment
+                  | :sole_proprietorship
+                  | :tax_exempt_government_instrumentality
+                  | :unincorporated_association
+                  | :unincorporated_non_profit,
+                :registration_number => String.t(),
+                :phone => String.t(),
+                :ownership_declaration => %{
+                  :user_agent => String.t(),
+                  :ip => String.t(),
+                  :date => integer()
+                },
+                :owners_provided => boolean(),
+                :name_kanji => String.t(),
+                :name_kana => String.t(),
+                :name => String.t(),
+                :executives_provided => boolean(),
+                :directors_provided => boolean(),
+                :address_kanji => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address_kana => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :capabilities => %{
+                :us_bank_account_ach_payments => %{:requested => boolean()},
+                :transfers => %{:requested => boolean()},
+                :tax_reporting_us_1099_misc => %{:requested => boolean()},
+                :tax_reporting_us_1099_k => %{:requested => boolean()},
+                :sofort_payments => %{:requested => boolean()},
+                :sepa_debit_payments => %{:requested => boolean()},
+                :paynow_payments => %{:requested => boolean()},
+                :p24_payments => %{:requested => boolean()},
+                :oxxo_payments => %{:requested => boolean()},
+                :legacy_payments => %{:requested => boolean()},
+                :konbini_payments => %{:requested => boolean()},
+                :klarna_payments => %{:requested => boolean()},
+                :jcb_payments => %{:requested => boolean()},
+                :ideal_payments => %{:requested => boolean()},
+                :grabpay_payments => %{:requested => boolean()},
+                :giropay_payments => %{:requested => boolean()},
+                :fpx_payments => %{:requested => boolean()},
+                :eps_payments => %{:requested => boolean()},
+                :cartes_bancaires_payments => %{:requested => boolean()},
+                :card_payments => %{:requested => boolean()},
+                :card_issuing => %{:requested => boolean()},
+                :boleto_payments => %{:requested => boolean()},
+                :bank_transfer_payments => %{:requested => boolean()},
+                :bancontact_payments => %{:requested => boolean()},
+                :bacs_debit_payments => %{:requested => boolean()},
+                :au_becs_debit_payments => %{:requested => boolean()},
+                :afterpay_clearpay_payments => %{:requested => boolean()},
+                :acss_debit_payments => %{:requested => boolean()}
+              },
+              :business_type =>
+                String.t() | :company | :government_entity | :individual | :non_profit,
+              :business_profile => %{
+                :url => String.t(),
+                :support_url => String.t(),
+                :support_phone => String.t(),
+                :support_email => String.t(),
+                :support_address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :product_description => String.t(),
+                :name => String.t(),
+                :mcc => String.t()
+              },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_type => String.t() | :checking | :futsu | :savings | :toza,
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :account_token => String.t()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_accounts(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -52,7 +299,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec delete_accounts_account_people_person(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           person :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -75,7 +322,72 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_people_person(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :verification => %{
+                :document => %{:front => String.t(), :back => String.t()},
+                :additional_document => %{:front => String.t(), :back => String.t()}
+              },
+              :ssn_last_4 => String.t(),
+              :relationship => %{
+                :title => String.t(),
+                :representative => boolean(),
+                :percent_ownership => String.t() | number(),
+                :owner => boolean(),
+                :executive => boolean(),
+                :director => boolean()
+              },
+              :political_exposure => String.t(),
+              :phone => String.t(),
+              :person_token => String.t(),
+              :nationality => String.t(),
+              :metadata => String.t() | map(),
+              :maiden_name => String.t(),
+              :last_name_kanji => String.t(),
+              :last_name_kana => String.t(),
+              :last_name => String.t(),
+              :id_number => String.t(),
+              :gender => String.t(),
+              :full_name_aliases => String.t() | [String.t()],
+              :first_name_kanji => String.t(),
+              :first_name_kana => String.t(),
+              :first_name => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :visa => %{:files => [String.t()]},
+                :passport => %{:files => [String.t()]},
+                :company_authorization => %{:files => [String.t()]}
+              },
+              :dob => String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+              :address_kanji => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address_kana => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map(),
           person :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -123,7 +435,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec delete_accounts_account_persons_person(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           person :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -146,7 +458,72 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_persons_person(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :verification => %{
+                :document => %{:front => String.t(), :back => String.t()},
+                :additional_document => %{:front => String.t(), :back => String.t()}
+              },
+              :ssn_last_4 => String.t(),
+              :relationship => %{
+                :title => String.t(),
+                :representative => boolean(),
+                :percent_ownership => String.t() | number(),
+                :owner => boolean(),
+                :executive => boolean(),
+                :director => boolean()
+              },
+              :political_exposure => String.t(),
+              :phone => String.t(),
+              :person_token => String.t(),
+              :nationality => String.t(),
+              :metadata => String.t() | map(),
+              :maiden_name => String.t(),
+              :last_name_kanji => String.t(),
+              :last_name_kana => String.t(),
+              :last_name => String.t(),
+              :id_number => String.t(),
+              :gender => String.t(),
+              :full_name_aliases => String.t() | [String.t()],
+              :first_name_kanji => String.t(),
+              :first_name_kana => String.t(),
+              :first_name => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :visa => %{:files => [String.t()]},
+                :passport => %{:files => [String.t()]},
+                :company_authorization => %{:files => [String.t()]}
+              },
+              :dob => String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+              :address_kanji => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address_kana => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map(),
           person :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -194,7 +571,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec delete_accounts_account_bank_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           id :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -219,7 +596,25 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_bank_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :exp_year => String.t(),
+              :exp_month => String.t(),
+              :default_for_currency => boolean(),
+              :address_zip => String.t(),
+              :address_state => String.t(),
+              :address_line2 => String.t(),
+              :address_line1 => String.t(),
+              :address_country => String.t(),
+              :address_city => String.t(),
+              :account_type => String.t() | :checking | :futsu | :savings | :toza,
+              :account_holder_type => String.t() | :company | :individual,
+              :account_holder_name => String.t()
+            }
+            | map(),
           id :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -267,7 +662,26 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_bank_accounts(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => map(),
+              :external_account => String.t(),
+              :expand => [String.t()],
+              :default_for_currency => boolean(),
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_type => String.t() | :checking | :futsu | :savings | :toza,
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  }
+            }
+            | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_bank_accounts(%ExOAPI.Client{} = client, body, account) do
@@ -290,8 +704,11 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   """
 
-  @spec delete_accounts_account(client :: ExOAPI.Client.t(), body :: map(), account :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec delete_accounts_account(
+          client :: ExOAPI.Client.t(),
+          body :: %{} | map(),
+          account :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def delete_accounts_account(%ExOAPI.Client{} = client, body, account) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -310,8 +727,254 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   """
 
-  @spec post_accounts_account(client :: ExOAPI.Client.t(), body :: map(), account :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_accounts_account(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :tos_acceptance => %{
+                :user_agent => String.t(),
+                :service_agreement => String.t(),
+                :ip => String.t(),
+                :date => integer()
+              },
+              :settings => %{
+                :payouts => %{
+                  :statement_descriptor => String.t(),
+                  :schedule => %{
+                    :weekly_anchor =>
+                      String.t()
+                      | :friday
+                      | :monday
+                      | :saturday
+                      | :sunday
+                      | :thursday
+                      | :tuesday
+                      | :wednesday,
+                    :monthly_anchor => integer(),
+                    :interval => String.t() | :daily | :manual | :monthly | :weekly,
+                    :delay_days => integer() | String.t() | :minimum
+                  },
+                  :debit_negative_balances => boolean()
+                },
+                :payments => %{
+                  :statement_descriptor_kanji => String.t(),
+                  :statement_descriptor_kana => String.t(),
+                  :statement_descriptor => String.t()
+                },
+                :card_payments => %{
+                  :statement_descriptor_prefix => String.t(),
+                  :decline_on => %{:cvc_failure => boolean(), :avs_failure => boolean()}
+                },
+                :card_issuing => %{
+                  :tos_acceptance => %{
+                    :user_agent => String.t(),
+                    :ip => String.t(),
+                    :date => integer()
+                  }
+                },
+                :branding => %{
+                  :secondary_color => String.t(),
+                  :primary_color => String.t(),
+                  :logo => String.t(),
+                  :icon => String.t()
+                }
+              },
+              :metadata => String.t() | map(),
+              :individual => %{
+                :verification => %{
+                  :document => %{:front => String.t(), :back => String.t()},
+                  :additional_document => %{:front => String.t(), :back => String.t()}
+                },
+                :ssn_last_4 => String.t(),
+                :political_exposure => String.t() | :existing | :none,
+                :phone => String.t(),
+                :metadata => String.t() | map(),
+                :maiden_name => String.t(),
+                :last_name_kanji => String.t(),
+                :last_name_kana => String.t(),
+                :last_name => String.t(),
+                :id_number => String.t(),
+                :gender => String.t(),
+                :full_name_aliases => String.t() | [String.t()],
+                :first_name_kanji => String.t(),
+                :first_name_kana => String.t(),
+                :first_name => String.t(),
+                :email => String.t(),
+                :dob =>
+                  String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+                :address_kanji => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address_kana => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :external_account => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :proof_of_registration => %{:files => [String.t()]},
+                :company_tax_id_verification => %{:files => [String.t()]},
+                :company_registration_verification => %{:files => [String.t()]},
+                :company_ministerial_decree => %{:files => [String.t()]},
+                :company_memorandum_of_association => %{:files => [String.t()]},
+                :company_license => %{:files => [String.t()]},
+                :bank_account_ownership_verification => %{:files => [String.t()]}
+              },
+              :default_currency => String.t(),
+              :company => %{
+                :verification => %{:document => %{:front => String.t(), :back => String.t()}},
+                :vat_id => String.t(),
+                :tax_id_registrar => String.t(),
+                :tax_id => String.t(),
+                :structure =>
+                  String.t()
+                  | :free_zone_establishment
+                  | :free_zone_llc
+                  | :government_instrumentality
+                  | :governmental_unit
+                  | :incorporated_non_profit
+                  | :limited_liability_partnership
+                  | :llc
+                  | :multi_member_llc
+                  | :private_company
+                  | :private_corporation
+                  | :private_partnership
+                  | :public_company
+                  | :public_corporation
+                  | :public_partnership
+                  | :single_member_llc
+                  | :sole_establishment
+                  | :sole_proprietorship
+                  | :tax_exempt_government_instrumentality
+                  | :unincorporated_association
+                  | :unincorporated_non_profit,
+                :registration_number => String.t(),
+                :phone => String.t(),
+                :ownership_declaration => %{
+                  :user_agent => String.t(),
+                  :ip => String.t(),
+                  :date => integer()
+                },
+                :owners_provided => boolean(),
+                :name_kanji => String.t(),
+                :name_kana => String.t(),
+                :name => String.t(),
+                :executives_provided => boolean(),
+                :directors_provided => boolean(),
+                :address_kanji => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address_kana => %{
+                  :town => String.t(),
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :capabilities => %{
+                :us_bank_account_ach_payments => %{:requested => boolean()},
+                :transfers => %{:requested => boolean()},
+                :tax_reporting_us_1099_misc => %{:requested => boolean()},
+                :tax_reporting_us_1099_k => %{:requested => boolean()},
+                :sofort_payments => %{:requested => boolean()},
+                :sepa_debit_payments => %{:requested => boolean()},
+                :paynow_payments => %{:requested => boolean()},
+                :p24_payments => %{:requested => boolean()},
+                :oxxo_payments => %{:requested => boolean()},
+                :legacy_payments => %{:requested => boolean()},
+                :konbini_payments => %{:requested => boolean()},
+                :klarna_payments => %{:requested => boolean()},
+                :jcb_payments => %{:requested => boolean()},
+                :ideal_payments => %{:requested => boolean()},
+                :grabpay_payments => %{:requested => boolean()},
+                :giropay_payments => %{:requested => boolean()},
+                :fpx_payments => %{:requested => boolean()},
+                :eps_payments => %{:requested => boolean()},
+                :cartes_bancaires_payments => %{:requested => boolean()},
+                :card_payments => %{:requested => boolean()},
+                :card_issuing => %{:requested => boolean()},
+                :boleto_payments => %{:requested => boolean()},
+                :bank_transfer_payments => %{:requested => boolean()},
+                :bancontact_payments => %{:requested => boolean()},
+                :bacs_debit_payments => %{:requested => boolean()},
+                :au_becs_debit_payments => %{:requested => boolean()},
+                :afterpay_clearpay_payments => %{:requested => boolean()},
+                :acss_debit_payments => %{:requested => boolean()}
+              },
+              :business_type =>
+                String.t() | :company | :government_entity | :individual | :non_profit,
+              :business_profile => %{
+                :url => String.t(),
+                :support_url => String.t(),
+                :support_phone => String.t(),
+                :support_email => String.t(),
+                :support_address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                },
+                :product_description => String.t(),
+                :name => String.t(),
+                :mcc => String.t()
+              },
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_type => String.t() | :checking | :futsu | :savings | :toza,
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  },
+              :account_token => String.t()
+            }
+            | map(),
+          account :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account(%ExOAPI.Client{} = client, body, account) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -353,7 +1016,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec delete_accounts_account_external_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           id :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -378,7 +1041,25 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_external_accounts_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :exp_year => String.t(),
+              :exp_month => String.t(),
+              :default_for_currency => boolean(),
+              :address_zip => String.t(),
+              :address_state => String.t(),
+              :address_line2 => String.t(),
+              :address_line1 => String.t(),
+              :address_country => String.t(),
+              :address_city => String.t(),
+              :account_type => String.t() | :checking | :futsu | :savings | :toza,
+              :account_holder_type => String.t() | :company | :individual,
+              :account_holder_name => String.t()
+            }
+            | map(),
           id :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -454,7 +1135,72 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_persons(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :verification => %{
+                :document => %{:front => String.t(), :back => String.t()},
+                :additional_document => %{:front => String.t(), :back => String.t()}
+              },
+              :ssn_last_4 => String.t(),
+              :relationship => %{
+                :title => String.t(),
+                :representative => boolean(),
+                :percent_ownership => String.t() | number(),
+                :owner => boolean(),
+                :executive => boolean(),
+                :director => boolean()
+              },
+              :political_exposure => String.t(),
+              :phone => String.t(),
+              :person_token => String.t(),
+              :nationality => String.t(),
+              :metadata => String.t() | map(),
+              :maiden_name => String.t(),
+              :last_name_kanji => String.t(),
+              :last_name_kana => String.t(),
+              :last_name => String.t(),
+              :id_number => String.t(),
+              :gender => String.t(),
+              :full_name_aliases => String.t() | [String.t()],
+              :first_name_kanji => String.t(),
+              :first_name_kana => String.t(),
+              :first_name => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :visa => %{:files => [String.t()]},
+                :passport => %{:files => [String.t()]},
+                :company_authorization => %{:files => [String.t()]}
+              },
+              :dob => String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+              :address_kanji => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address_kana => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_persons(%ExOAPI.Client{} = client, body, account) do
@@ -507,7 +1253,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_capabilities_capability(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:requested => boolean(), :expand => [String.t()]} | map(),
           capability :: String.t(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -565,7 +1311,26 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_external_accounts(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => map(),
+              :external_account => String.t(),
+              :expand => [String.t()],
+              :default_for_currency => boolean(),
+              :bank_account =>
+                String.t()
+                | %{
+                    :routing_number => String.t(),
+                    :object => String.t() | :bank_account,
+                    :currency => String.t(),
+                    :country => String.t(),
+                    :account_type => String.t() | :checking | :futsu | :savings | :toza,
+                    :account_number => String.t(),
+                    :account_holder_type => String.t() | :company | :individual,
+                    :account_holder_name => String.t()
+                  }
+            }
+            | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_external_accounts(%ExOAPI.Client{} = client, body, account) do
@@ -618,7 +1383,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_login_links(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:redirect_url => String.t(), :expand => [String.t()]} | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_login_links(%ExOAPI.Client{} = client, body, account) do
@@ -641,7 +1406,7 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_reject(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:reason => String.t(), :expand => [String.t()]} | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_reject(%ExOAPI.Client{} = client, body, account) do
@@ -662,7 +1427,72 @@ defmodule ExOAPI.Stripe.SDK.Accounts do
 
   @spec post_accounts_account_people(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :verification => %{
+                :document => %{:front => String.t(), :back => String.t()},
+                :additional_document => %{:front => String.t(), :back => String.t()}
+              },
+              :ssn_last_4 => String.t(),
+              :relationship => %{
+                :title => String.t(),
+                :representative => boolean(),
+                :percent_ownership => String.t() | number(),
+                :owner => boolean(),
+                :executive => boolean(),
+                :director => boolean()
+              },
+              :political_exposure => String.t(),
+              :phone => String.t(),
+              :person_token => String.t(),
+              :nationality => String.t(),
+              :metadata => String.t() | map(),
+              :maiden_name => String.t(),
+              :last_name_kanji => String.t(),
+              :last_name_kana => String.t(),
+              :last_name => String.t(),
+              :id_number => String.t(),
+              :gender => String.t(),
+              :full_name_aliases => String.t() | [String.t()],
+              :first_name_kanji => String.t(),
+              :first_name_kana => String.t(),
+              :first_name => String.t(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :documents => %{
+                :visa => %{:files => [String.t()]},
+                :passport => %{:files => [String.t()]},
+                :company_authorization => %{:files => [String.t()]}
+              },
+              :dob => String.t() | %{:year => integer(), :month => integer(), :day => integer()},
+              :address_kanji => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address_kana => %{
+                :town => String.t(),
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              },
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map(),
           account :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_accounts_account_people(%ExOAPI.Client{} = client, body, account) do

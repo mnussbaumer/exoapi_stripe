@@ -4,7 +4,33 @@ defmodule ExOAPI.Stripe.SDK.Skus do
 
   """
 
-  @spec post_skus(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_skus(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :product => String.t(),
+              :price => integer(),
+              :package_dimensions => %{
+                :width => number(),
+                :weight => number(),
+                :length => number(),
+                :height => number()
+              },
+              :metadata => map(),
+              :inventory => %{
+                :value => String.t() | :in_stock | :limited | :out_of_stock,
+                :type => String.t() | :bucket | :finite | :infinite,
+                :quantity => integer()
+              },
+              :image => String.t(),
+              :id => String.t(),
+              :expand => [String.t()],
+              :currency => String.t(),
+              :attributes => map(),
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_skus(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -56,7 +82,7 @@ defmodule ExOAPI.Stripe.SDK.Skus do
 
   """
 
-  @spec delete_skus_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
+  @spec delete_skus_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
           {:ok, any()} | {:error, any()}
   def delete_skus_id(%ExOAPI.Client{} = client, body, id) do
     client
@@ -76,8 +102,35 @@ defmodule ExOAPI.Stripe.SDK.Skus do
 
   """
 
-  @spec post_skus_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_skus_id(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :product => String.t(),
+              :price => integer(),
+              :package_dimensions =>
+                String.t()
+                | %{
+                    :width => number(),
+                    :weight => number(),
+                    :length => number(),
+                    :height => number()
+                  },
+              :metadata => String.t() | map(),
+              :inventory => %{
+                :value => String.t() | :in_stock | :limited | :out_of_stock,
+                :type => String.t() | :bucket | :finite | :infinite,
+                :quantity => integer()
+              },
+              :image => String.t(),
+              :expand => [String.t()],
+              :currency => String.t(),
+              :attributes => map(),
+              :active => boolean()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_skus_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

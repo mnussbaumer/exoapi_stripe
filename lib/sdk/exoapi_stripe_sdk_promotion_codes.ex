@@ -6,7 +6,9 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
 
   @spec post_promotion_codes_promotion_code(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:metadata => String.t() | map(), :expand => [String.t()], :active => boolean()}
+            | map(),
           promotion_code :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_promotion_codes_promotion_code(%ExOAPI.Client{} = client, body, promotion_code) do
@@ -48,8 +50,26 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
 
   """
 
-  @spec post_promotion_codes(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_promotion_codes(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :restrictions => %{
+                :minimum_amount_currency => String.t(),
+                :minimum_amount => integer(),
+                :first_time_transaction => boolean()
+              },
+              :metadata => map(),
+              :max_redemptions => integer(),
+              :expires_at => integer(),
+              :expand => [String.t()],
+              :customer => String.t(),
+              :coupon => String.t(),
+              :code => String.t(),
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_promotion_codes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -6,7 +6,7 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
 
   @spec delete_subscriptions_subscription_exposed_id_discount(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           subscription_exposed_id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_subscriptions_subscription_exposed_id_discount(
@@ -64,8 +64,142 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
 
   """
 
-  @spec post_subscriptions(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_subscriptions(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :trial_period_days => integer(),
+              :trial_from_plan => boolean(),
+              :trial_end => integer() | String.t() | :now,
+              :transfer_data => %{:destination => String.t(), :amount_percent => number()},
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :promotion_code => String.t(),
+              :pending_invoice_item_interval =>
+                String.t()
+                | %{
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :week | :year
+                  },
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t()
+                    | %{
+                        :request_three_d_secure => String.t() | :any | :automatic,
+                        :mandate_options => %{
+                          :description => String.t(),
+                          :amount_type => String.t() | :fixed | :maximum,
+                          :amount => integer()
+                        }
+                      },
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :off_session => boolean(),
+              :metadata => String.t() | map(),
+              :items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t(),
+                  :metadata => map(),
+                  :billing_thresholds => String.t() | %{:usage_gte => integer()}
+                }
+              ],
+              :expand => [String.t()],
+              :default_tax_rates => String.t() | [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :customer => String.t(),
+              :coupon => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :cancel_at_period_end => boolean(),
+              :cancel_at => integer(),
+              :billing_thresholds =>
+                String.t() | %{:reset_billing_cycle_anchor => boolean(), :amount_gte => integer()},
+              :billing_cycle_anchor => integer(),
+              :backdate_start_date => integer(),
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => number(),
+              :add_invoice_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t()
+                }
+              ]
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_subscriptions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -129,7 +263,8 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
 
   @spec delete_subscriptions_subscription_exposed_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:prorate => boolean(), :invoice_now => boolean(), :expand => [String.t()]} | map(),
           subscription_exposed_id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_subscriptions_subscription_exposed_id(
@@ -154,7 +289,147 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
 
   @spec post_subscriptions_subscription_exposed_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :trial_from_plan => boolean(),
+              :trial_end => integer() | String.t() | :now,
+              :transfer_data =>
+                String.t() | %{:destination => String.t(), :amount_percent => number()},
+              :proration_date => integer(),
+              :proration_behavior => String.t() | :always_invoice | :create_prorations | :none,
+              :promotion_code => String.t(),
+              :pending_invoice_item_interval =>
+                String.t()
+                | %{
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :week | :year
+                  },
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t()
+                    | %{
+                        :request_three_d_secure => String.t() | :any | :automatic,
+                        :mandate_options => %{
+                          :description => String.t(),
+                          :amount_type => String.t() | :fixed | :maximum,
+                          :amount => integer()
+                        }
+                      },
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :payment_behavior =>
+                String.t()
+                | :allow_incomplete
+                | :default_incomplete
+                | :error_if_incomplete
+                | :pending_if_incomplete,
+              :pause_collection =>
+                String.t()
+                | %{
+                    :resumes_at => integer(),
+                    :behavior => String.t() | :keep_as_draft | :mark_uncollectible | :void
+                  },
+              :off_session => boolean(),
+              :metadata => String.t() | map(),
+              :items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :recurring => %{
+                      :interval_count => integer(),
+                      :interval => String.t() | :day | :month | :week | :year
+                    },
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t(),
+                  :metadata => String.t() | map(),
+                  :id => String.t(),
+                  :deleted => boolean(),
+                  :clear_usage => boolean(),
+                  :billing_thresholds => String.t() | %{:usage_gte => integer()}
+                }
+              ],
+              :expand => [String.t()],
+              :default_tax_rates => String.t() | [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :coupon => String.t(),
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :cancel_at_period_end => boolean(),
+              :cancel_at => String.t() | integer(),
+              :billing_thresholds =>
+                String.t() | %{:reset_billing_cycle_anchor => boolean(), :amount_gte => integer()},
+              :billing_cycle_anchor => String.t() | :now | :unchanged,
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => number(),
+              :add_invoice_items => [
+                %{
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :price_data => %{
+                    :unit_amount_decimal => String.t(),
+                    :unit_amount => integer(),
+                    :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                    :product => String.t(),
+                    :currency => String.t()
+                  },
+                  :price => String.t()
+                }
+              ]
+            }
+            | map(),
           subscription_exposed_id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_subscriptions_subscription_exposed_id(

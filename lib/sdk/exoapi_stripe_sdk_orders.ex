@@ -4,8 +4,26 @@ defmodule ExOAPI.Stripe.SDK.Orders do
 
   """
 
-  @spec post_orders_id_returns(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_orders_id_returns(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :items =>
+                String.t()
+                | [
+                    %{
+                      :type => String.t() | :discount | :shipping | :sku | :tax,
+                      :quantity => integer(),
+                      :parent => String.t(),
+                      :description => String.t(),
+                      :amount => integer()
+                    }
+                  ],
+              :expand => [String.t()]
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_orders_id_returns(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -22,8 +40,20 @@ defmodule ExOAPI.Stripe.SDK.Orders do
 
   """
 
-  @spec post_orders_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_orders_id(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :status => String.t() | :canceled | :created | :fulfilled | :paid | :returned,
+              :shipping => %{:tracking_number => String.t(), :carrier => String.t()},
+              :selected_shipping_method => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :coupon => String.t()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_orders_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -60,7 +90,41 @@ defmodule ExOAPI.Stripe.SDK.Orders do
 
   """
 
-  @spec post_orders(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_orders(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :shipping => %{
+                :phone => String.t(),
+                :name => String.t(),
+                :address => %{
+                  :state => String.t(),
+                  :postal_code => String.t(),
+                  :line2 => String.t(),
+                  :line1 => String.t(),
+                  :country => String.t(),
+                  :city => String.t()
+                }
+              },
+              :metadata => map(),
+              :items => [
+                %{
+                  :type => String.t() | :discount | :shipping | :sku | :tax,
+                  :quantity => integer(),
+                  :parent => String.t(),
+                  :description => String.t(),
+                  :currency => String.t(),
+                  :amount => integer()
+                }
+              ],
+              :expand => [String.t()],
+              :email => String.t(),
+              :customer => String.t(),
+              :currency => String.t(),
+              :coupon => String.t()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_orders(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -114,8 +178,20 @@ defmodule ExOAPI.Stripe.SDK.Orders do
 
   """
 
-  @spec post_orders_id_pay(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_orders_id_pay(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :source => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :email => String.t(),
+              :customer => String.t(),
+              :application_fee => integer()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_orders_id_pay(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

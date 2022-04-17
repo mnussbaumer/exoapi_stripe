@@ -27,8 +27,19 @@ defmodule ExOAPI.Stripe.SDK.Stripe3dSecure do
 
   """
 
-  @spec post3d_secure(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post3d_secure(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :return_url => String.t(),
+              :expand => [String.t()],
+              :customer => String.t(),
+              :currency => String.t(),
+              :card => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post3d_secure(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

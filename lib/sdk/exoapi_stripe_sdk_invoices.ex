@@ -6,7 +6,16 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   @spec post_invoices_invoice_pay(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :source => String.t(),
+              :payment_method => String.t(),
+              :paid_out_of_band => boolean(),
+              :off_session => boolean(),
+              :forgive => boolean(),
+              :expand => [String.t()]
+            }
+            | map(),
           invoice :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice_pay(%ExOAPI.Client{} = client, body, invoice) do
@@ -88,7 +97,7 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   @spec post_invoices_invoice_send(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice_send(%ExOAPI.Client{} = client, body, invoice) do
@@ -170,8 +179,87 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   """
 
-  @spec post_invoices(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_invoices(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_data => %{:destination => String.t(), :amount => integer()},
+              :subscription => String.t(),
+              :statement_descriptor => String.t(),
+              :pending_invoice_items_behavior =>
+                String.t() | :exclude | :include | :include_and_require,
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t() | %{:request_three_d_secure => String.t() | :any | :automatic},
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :on_behalf_of => String.t(),
+              :metadata => String.t() | map(),
+              :footer => String.t(),
+              :expand => [String.t()],
+              :due_date => integer(),
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :description => String.t(),
+              :default_tax_rates => [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :customer => String.t(),
+              :custom_fields => String.t() | [%{:value => String.t(), :name => String.t()}],
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :automatic_tax => %{:enabled => boolean()},
+              :auto_advance => boolean(),
+              :application_fee_amount => integer(),
+              :account_tax_ids => String.t() | [String.t()]
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_invoices(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -227,7 +315,7 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   @spec post_invoices_invoice_mark_uncollectible(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice_mark_uncollectible(%ExOAPI.Client{} = client, body, invoice) do
@@ -246,8 +334,11 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   """
 
-  @spec delete_invoices_invoice(client :: ExOAPI.Client.t(), body :: map(), invoice :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec delete_invoices_invoice(
+          client :: ExOAPI.Client.t(),
+          body :: %{} | map(),
+          invoice :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def delete_invoices_invoice(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -269,8 +360,84 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   """
 
-  @spec post_invoices_invoice(client :: ExOAPI.Client.t(), body :: map(), invoice :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_invoices_invoice(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_data => String.t() | %{:destination => String.t(), :amount => integer()},
+              :statement_descriptor => String.t(),
+              :payment_settings => %{
+                :payment_method_types =>
+                  String.t()
+                  | [
+                      String.t()
+                      | :ach_credit_transfer
+                      | :ach_debit
+                      | :acss_debit
+                      | :au_becs_debit
+                      | :bacs_debit
+                      | :bancontact
+                      | :boleto
+                      | :card
+                      | :customer_balance
+                      | :fpx
+                      | :giropay
+                      | :grabpay
+                      | :ideal
+                      | :konbini
+                      | :paynow
+                      | :sepa_debit
+                      | :sofort
+                      | :us_bank_account
+                      | :wechat_pay
+                    ],
+                :payment_method_options => %{
+                  :us_bank_account =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits
+                      },
+                  :konbini => String.t() | %{},
+                  :customer_balance =>
+                    String.t()
+                    | %{:funding_type => String.t(), :bank_transfer => %{:type => String.t()}},
+                  :card =>
+                    String.t() | %{:request_three_d_secure => String.t() | :any | :automatic},
+                  :bancontact =>
+                    String.t() | %{:preferred_language => String.t() | :de | :en | :fr | :nl},
+                  :acss_debit =>
+                    String.t()
+                    | %{
+                        :verification_method =>
+                          String.t() | :automatic | :instant | :microdeposits,
+                        :mandate_options => %{
+                          :transaction_type => String.t() | :business | :personal
+                        }
+                      }
+                }
+              },
+              :on_behalf_of => String.t(),
+              :metadata => String.t() | map(),
+              :footer => String.t(),
+              :expand => [String.t()],
+              :due_date => integer(),
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :description => String.t(),
+              :default_tax_rates => String.t() | [String.t()],
+              :default_source => String.t(),
+              :default_payment_method => String.t(),
+              :days_until_due => integer(),
+              :custom_fields => String.t() | [%{:value => String.t(), :name => String.t()}],
+              :collection_method => String.t() | :charge_automatically | :send_invoice,
+              :automatic_tax => %{:enabled => boolean()},
+              :auto_advance => boolean(),
+              :application_fee_amount => integer(),
+              :account_tax_ids => String.t() | [String.t()]
+            }
+            | map(),
+          invoice :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -312,7 +479,7 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   @spec post_invoices_invoice_finalize(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()], :auto_advance => boolean()} | map(),
           invoice :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice_finalize(%ExOAPI.Client{} = client, body, invoice) do
@@ -400,7 +567,7 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
 
   @spec post_invoices_invoice_void(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoices_invoice_void(%ExOAPI.Client{} = client, body, invoice) do

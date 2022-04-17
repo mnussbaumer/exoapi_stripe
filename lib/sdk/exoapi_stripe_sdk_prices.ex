@@ -4,8 +4,21 @@ defmodule ExOAPI.Stripe.SDK.Prices do
 
   """
 
-  @spec post_prices_price(client :: ExOAPI.Client.t(), body :: map(), price :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_prices_price(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_lookup_key => boolean(),
+              :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+              :nickname => String.t(),
+              :metadata => String.t() | map(),
+              :lookup_key => String.t(),
+              :expand => [String.t()],
+              :active => boolean()
+            }
+            | map(),
+          price :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_prices_price(%ExOAPI.Client{} = client, body, price) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -45,7 +58,54 @@ defmodule ExOAPI.Stripe.SDK.Prices do
 
   """
 
-  @spec post_prices(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_prices(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :unit_amount_decimal => String.t(),
+              :unit_amount => integer(),
+              :transform_quantity => %{
+                :round => String.t() | :down | :up,
+                :divide_by => integer()
+              },
+              :transfer_lookup_key => boolean(),
+              :tiers_mode => String.t() | :graduated | :volume,
+              :tiers => [
+                %{
+                  :up_to => integer() | String.t() | :inf,
+                  :unit_amount_decimal => String.t(),
+                  :unit_amount => integer(),
+                  :flat_amount_decimal => String.t(),
+                  :flat_amount => integer()
+                }
+              ],
+              :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+              :recurring => %{
+                :usage_type => String.t() | :licensed | :metered,
+                :interval_count => integer(),
+                :interval => String.t() | :day | :month | :week | :year,
+                :aggregate_usage => String.t() | :last_during_period | :last_ever | :max | :sum
+              },
+              :product_data => %{
+                :unit_label => String.t(),
+                :tax_code => String.t(),
+                :statement_descriptor => String.t(),
+                :name => String.t(),
+                :metadata => map(),
+                :id => String.t(),
+                :active => boolean()
+              },
+              :product => String.t(),
+              :nickname => String.t(),
+              :metadata => map(),
+              :lookup_key => String.t(),
+              :expand => [String.t()],
+              :currency => String.t(),
+              :billing_scheme => String.t() | :per_unit | :tiered,
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_prices(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

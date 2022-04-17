@@ -4,8 +4,11 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
 
   """
 
-  @spec post_credit_notes_id_void(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_credit_notes_id_void(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()]} | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_credit_notes_id_void(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -35,8 +38,36 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
 
   """
 
-  @spec post_credit_notes(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_credit_notes(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :refund_amount => integer(),
+              :refund => String.t(),
+              :reason =>
+                String.t() | :duplicate | :fraudulent | :order_change | :product_unsatisfactory,
+              :out_of_band_amount => integer(),
+              :metadata => map(),
+              :memo => String.t(),
+              :lines => [
+                %{
+                  :unit_amount_decimal => String.t(),
+                  :unit_amount => integer(),
+                  :type => String.t() | :custom_line_item | :invoice_line_item,
+                  :tax_rates => String.t() | [String.t()],
+                  :quantity => integer(),
+                  :invoice_line_item => String.t(),
+                  :description => String.t(),
+                  :amount => integer()
+                }
+              ],
+              :invoice => String.t(),
+              :expand => [String.t()],
+              :credit_amount => integer(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_credit_notes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -130,8 +161,11 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
 
   """
 
-  @spec post_credit_notes_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_credit_notes_id(
+          client :: ExOAPI.Client.t(),
+          body :: %{:metadata => map(), :memo => String.t(), :expand => [String.t()]} | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_credit_notes_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

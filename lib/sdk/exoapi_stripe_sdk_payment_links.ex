@@ -38,8 +38,283 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
 
   """
 
-  @spec post_payment_links(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_payment_links(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_data => %{:destination => String.t(), :amount => integer()},
+              :subscription_data => %{:trial_period_days => integer()},
+              :shipping_address_collection => %{
+                :allowed_countries => [
+                  String.t()
+                  | :AC
+                  | :AD
+                  | :AE
+                  | :AF
+                  | :AG
+                  | :AI
+                  | :AL
+                  | :AM
+                  | :AO
+                  | :AQ
+                  | :AR
+                  | :AT
+                  | :AU
+                  | :AW
+                  | :AX
+                  | :AZ
+                  | :BA
+                  | :BB
+                  | :BD
+                  | :BE
+                  | :BF
+                  | :BG
+                  | :BH
+                  | :BI
+                  | :BJ
+                  | :BL
+                  | :BM
+                  | :BN
+                  | :BO
+                  | :BQ
+                  | :BR
+                  | :BS
+                  | :BT
+                  | :BV
+                  | :BW
+                  | :BY
+                  | :BZ
+                  | :CA
+                  | :CD
+                  | :CF
+                  | :CG
+                  | :CH
+                  | :CI
+                  | :CK
+                  | :CL
+                  | :CM
+                  | :CN
+                  | :CO
+                  | :CR
+                  | :CV
+                  | :CW
+                  | :CY
+                  | :CZ
+                  | :DE
+                  | :DJ
+                  | :DK
+                  | :DM
+                  | :DO
+                  | :DZ
+                  | :EC
+                  | :EE
+                  | :EG
+                  | :EH
+                  | :ER
+                  | :ES
+                  | :ET
+                  | :FI
+                  | :FJ
+                  | :FK
+                  | :FO
+                  | :FR
+                  | :GA
+                  | :GB
+                  | :GD
+                  | :GE
+                  | :GF
+                  | :GG
+                  | :GH
+                  | :GI
+                  | :GL
+                  | :GM
+                  | :GN
+                  | :GP
+                  | :GQ
+                  | :GR
+                  | :GS
+                  | :GT
+                  | :GU
+                  | :GW
+                  | :GY
+                  | :HK
+                  | :HN
+                  | :HR
+                  | :HT
+                  | :HU
+                  | :ID
+                  | :IE
+                  | :IL
+                  | :IM
+                  | :IN
+                  | :IO
+                  | :IQ
+                  | :IS
+                  | :IT
+                  | :JE
+                  | :JM
+                  | :JO
+                  | :JP
+                  | :KE
+                  | :KG
+                  | :KH
+                  | :KI
+                  | :KM
+                  | :KN
+                  | :KR
+                  | :KW
+                  | :KY
+                  | :KZ
+                  | :LA
+                  | :LB
+                  | :LC
+                  | :LI
+                  | :LK
+                  | :LR
+                  | :LS
+                  | :LT
+                  | :LU
+                  | :LV
+                  | :LY
+                  | :MA
+                  | :MC
+                  | :MD
+                  | :ME
+                  | :MF
+                  | :MG
+                  | :MK
+                  | :ML
+                  | :MM
+                  | :MN
+                  | :MO
+                  | :MQ
+                  | :MR
+                  | :MS
+                  | :MT
+                  | :MU
+                  | :MV
+                  | :MW
+                  | :MX
+                  | :MY
+                  | :MZ
+                  | :NA
+                  | :NC
+                  | :NE
+                  | :NG
+                  | :NI
+                  | :NL
+                  | :NO
+                  | :NP
+                  | :NR
+                  | :NU
+                  | :NZ
+                  | :OM
+                  | :PA
+                  | :PE
+                  | :PF
+                  | :PG
+                  | :PH
+                  | :PK
+                  | :PL
+                  | :PM
+                  | :PN
+                  | :PR
+                  | :PS
+                  | :PT
+                  | :PY
+                  | :QA
+                  | :RE
+                  | :RO
+                  | :RS
+                  | :RU
+                  | :RW
+                  | :SA
+                  | :SB
+                  | :SC
+                  | :SE
+                  | :SG
+                  | :SH
+                  | :SI
+                  | :SJ
+                  | :SK
+                  | :SL
+                  | :SM
+                  | :SN
+                  | :SO
+                  | :SR
+                  | :SS
+                  | :ST
+                  | :SV
+                  | :SX
+                  | :SZ
+                  | :TA
+                  | :TC
+                  | :TD
+                  | :TF
+                  | :TG
+                  | :TH
+                  | :TJ
+                  | :TK
+                  | :TL
+                  | :TM
+                  | :TN
+                  | :TO
+                  | :TR
+                  | :TT
+                  | :TV
+                  | :TW
+                  | :TZ
+                  | :UA
+                  | :UG
+                  | :US
+                  | :UY
+                  | :UZ
+                  | :VA
+                  | :VC
+                  | :VE
+                  | :VG
+                  | :VN
+                  | :VU
+                  | :WF
+                  | :WS
+                  | :XK
+                  | :YE
+                  | :YT
+                  | :ZA
+                  | :ZM
+                  | :ZW
+                  | :ZZ
+                ]
+              },
+              :phone_number_collection => %{:enabled => boolean()},
+              :payment_method_types => [String.t() | :card],
+              :on_behalf_of => String.t(),
+              :metadata => map(),
+              :line_items => [
+                %{
+                  :quantity => integer(),
+                  :price => String.t(),
+                  :adjustable_quantity => %{
+                    :minimum => integer(),
+                    :maximum => integer(),
+                    :enabled => boolean()
+                  }
+                }
+              ],
+              :expand => [String.t()],
+              :billing_address_collection => String.t() | :auto | :required,
+              :automatic_tax => %{:enabled => boolean()},
+              :application_fee_percent => number(),
+              :application_fee_amount => integer(),
+              :allow_promotion_codes => boolean(),
+              :after_completion => %{
+                :type => String.t() | :hosted_confirmation | :redirect,
+                :redirect => %{:url => String.t()},
+                :hosted_confirmation => %{:custom_message => String.t()}
+              }
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_payment_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -85,7 +360,277 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
 
   @spec post_payment_links_payment_link(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :shipping_address_collection =>
+                String.t()
+                | %{
+                    :allowed_countries => [
+                      String.t()
+                      | :AC
+                      | :AD
+                      | :AE
+                      | :AF
+                      | :AG
+                      | :AI
+                      | :AL
+                      | :AM
+                      | :AO
+                      | :AQ
+                      | :AR
+                      | :AT
+                      | :AU
+                      | :AW
+                      | :AX
+                      | :AZ
+                      | :BA
+                      | :BB
+                      | :BD
+                      | :BE
+                      | :BF
+                      | :BG
+                      | :BH
+                      | :BI
+                      | :BJ
+                      | :BL
+                      | :BM
+                      | :BN
+                      | :BO
+                      | :BQ
+                      | :BR
+                      | :BS
+                      | :BT
+                      | :BV
+                      | :BW
+                      | :BY
+                      | :BZ
+                      | :CA
+                      | :CD
+                      | :CF
+                      | :CG
+                      | :CH
+                      | :CI
+                      | :CK
+                      | :CL
+                      | :CM
+                      | :CN
+                      | :CO
+                      | :CR
+                      | :CV
+                      | :CW
+                      | :CY
+                      | :CZ
+                      | :DE
+                      | :DJ
+                      | :DK
+                      | :DM
+                      | :DO
+                      | :DZ
+                      | :EC
+                      | :EE
+                      | :EG
+                      | :EH
+                      | :ER
+                      | :ES
+                      | :ET
+                      | :FI
+                      | :FJ
+                      | :FK
+                      | :FO
+                      | :FR
+                      | :GA
+                      | :GB
+                      | :GD
+                      | :GE
+                      | :GF
+                      | :GG
+                      | :GH
+                      | :GI
+                      | :GL
+                      | :GM
+                      | :GN
+                      | :GP
+                      | :GQ
+                      | :GR
+                      | :GS
+                      | :GT
+                      | :GU
+                      | :GW
+                      | :GY
+                      | :HK
+                      | :HN
+                      | :HR
+                      | :HT
+                      | :HU
+                      | :ID
+                      | :IE
+                      | :IL
+                      | :IM
+                      | :IN
+                      | :IO
+                      | :IQ
+                      | :IS
+                      | :IT
+                      | :JE
+                      | :JM
+                      | :JO
+                      | :JP
+                      | :KE
+                      | :KG
+                      | :KH
+                      | :KI
+                      | :KM
+                      | :KN
+                      | :KR
+                      | :KW
+                      | :KY
+                      | :KZ
+                      | :LA
+                      | :LB
+                      | :LC
+                      | :LI
+                      | :LK
+                      | :LR
+                      | :LS
+                      | :LT
+                      | :LU
+                      | :LV
+                      | :LY
+                      | :MA
+                      | :MC
+                      | :MD
+                      | :ME
+                      | :MF
+                      | :MG
+                      | :MK
+                      | :ML
+                      | :MM
+                      | :MN
+                      | :MO
+                      | :MQ
+                      | :MR
+                      | :MS
+                      | :MT
+                      | :MU
+                      | :MV
+                      | :MW
+                      | :MX
+                      | :MY
+                      | :MZ
+                      | :NA
+                      | :NC
+                      | :NE
+                      | :NG
+                      | :NI
+                      | :NL
+                      | :NO
+                      | :NP
+                      | :NR
+                      | :NU
+                      | :NZ
+                      | :OM
+                      | :PA
+                      | :PE
+                      | :PF
+                      | :PG
+                      | :PH
+                      | :PK
+                      | :PL
+                      | :PM
+                      | :PN
+                      | :PR
+                      | :PS
+                      | :PT
+                      | :PY
+                      | :QA
+                      | :RE
+                      | :RO
+                      | :RS
+                      | :RU
+                      | :RW
+                      | :SA
+                      | :SB
+                      | :SC
+                      | :SE
+                      | :SG
+                      | :SH
+                      | :SI
+                      | :SJ
+                      | :SK
+                      | :SL
+                      | :SM
+                      | :SN
+                      | :SO
+                      | :SR
+                      | :SS
+                      | :ST
+                      | :SV
+                      | :SX
+                      | :SZ
+                      | :TA
+                      | :TC
+                      | :TD
+                      | :TF
+                      | :TG
+                      | :TH
+                      | :TJ
+                      | :TK
+                      | :TL
+                      | :TM
+                      | :TN
+                      | :TO
+                      | :TR
+                      | :TT
+                      | :TV
+                      | :TW
+                      | :TZ
+                      | :UA
+                      | :UG
+                      | :US
+                      | :UY
+                      | :UZ
+                      | :VA
+                      | :VC
+                      | :VE
+                      | :VG
+                      | :VN
+                      | :VU
+                      | :WF
+                      | :WS
+                      | :XK
+                      | :YE
+                      | :YT
+                      | :ZA
+                      | :ZM
+                      | :ZW
+                      | :ZZ
+                    ]
+                  },
+              :payment_method_types => String.t() | [String.t() | :card],
+              :metadata => map(),
+              :line_items => [
+                %{
+                  :quantity => integer(),
+                  :id => String.t(),
+                  :adjustable_quantity => %{
+                    :minimum => integer(),
+                    :maximum => integer(),
+                    :enabled => boolean()
+                  }
+                }
+              ],
+              :expand => [String.t()],
+              :billing_address_collection => String.t() | :auto | :required,
+              :automatic_tax => %{:enabled => boolean()},
+              :allow_promotion_codes => boolean(),
+              :after_completion => %{
+                :type => String.t() | :hosted_confirmation | :redirect,
+                :redirect => %{:url => String.t()},
+                :hosted_confirmation => %{:custom_message => String.t()}
+              },
+              :active => boolean()
+            }
+            | map(),
           payment_link :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payment_links_payment_link(%ExOAPI.Client{} = client, body, payment_link) do

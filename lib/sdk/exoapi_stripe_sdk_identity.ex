@@ -24,7 +24,7 @@ defmodule ExOAPI.Stripe.SDK.Identity do
 
   @spec post_identity_verification_sessions_session_redact(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           session :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_identity_verification_sessions_session_redact(%ExOAPI.Client{} = client, body, session) do
@@ -47,7 +47,7 @@ defmodule ExOAPI.Stripe.SDK.Identity do
 
   @spec post_identity_verification_sessions_session_cancel(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           session :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_identity_verification_sessions_session_cancel(%ExOAPI.Client{} = client, body, session) do
@@ -72,8 +72,27 @@ defmodule ExOAPI.Stripe.SDK.Identity do
 
   """
 
-  @spec post_identity_verification_sessions(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_identity_verification_sessions(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :type => String.t() | :document | :id_number,
+              :return_url => String.t(),
+              :options => %{
+                :document =>
+                  String.t()
+                  | %{
+                      :require_matching_selfie => boolean(),
+                      :require_live_capture => boolean(),
+                      :require_id_number => boolean(),
+                      :allowed_types => [String.t() | :driving_license | :id_card | :passport]
+                    }
+              },
+              :metadata => map(),
+              :expand => [String.t()]
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_identity_verification_sessions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -183,7 +202,23 @@ defmodule ExOAPI.Stripe.SDK.Identity do
 
   @spec post_identity_verification_sessions_session(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :type => String.t() | :document | :id_number,
+              :options => %{
+                :document =>
+                  String.t()
+                  | %{
+                      :require_matching_selfie => boolean(),
+                      :require_live_capture => boolean(),
+                      :require_id_number => boolean(),
+                      :allowed_types => [String.t() | :driving_license | :id_card | :passport]
+                    }
+              },
+              :metadata => map(),
+              :expand => [String.t()]
+            }
+            | map(),
           session :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_identity_verification_sessions_session(%ExOAPI.Client{} = client, body, session) do

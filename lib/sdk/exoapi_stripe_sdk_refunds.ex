@@ -8,7 +8,7 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
 
   @spec post_refunds_refund_cancel(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           refund :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_refunds_refund_cancel(%ExOAPI.Client{} = client, body, refund) do
@@ -29,8 +29,11 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
 
   """
 
-  @spec post_refunds_refund(client :: ExOAPI.Client.t(), body :: map(), refund :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_refunds_refund(
+          client :: ExOAPI.Client.t(),
+          body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
+          refund :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_refunds_refund(%ExOAPI.Client{} = client, body, refund) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -70,7 +73,21 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
 
   """
 
-  @spec post_refunds(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_refunds(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :reverse_transfer => boolean(),
+              :refund_application_fee => boolean(),
+              :reason => String.t() | :duplicate | :fraudulent | :requested_by_customer,
+              :payment_intent => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :charge => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_refunds(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

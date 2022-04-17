@@ -6,7 +6,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_readers_reader_process_payment_intent(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :process_config => %{:skip_tipping => boolean()},
+              :payment_intent => String.t(),
+              :expand => [String.t()]
+            }
+            | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers_reader_process_payment_intent(%ExOAPI.Client{} = client, body, reader) do
@@ -27,7 +33,7 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec delete_terminal_readers_reader(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_terminal_readers_reader(%ExOAPI.Client{} = client, body, reader) do
@@ -48,7 +54,9 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_readers_reader(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:metadata => String.t() | map(), :label => String.t(), :expand => [String.t()]}
+            | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers_reader(%ExOAPI.Client{} = client, body, reader) do
@@ -92,7 +100,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_readers_reader_process_setup_intent(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :setup_intent => String.t(),
+              :expand => [String.t()],
+              :customer_consent_collected => boolean()
+            }
+            | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers_reader_process_setup_intent(%ExOAPI.Client{} = client, body, reader) do
@@ -111,8 +125,18 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   """
 
-  @spec post_terminal_readers(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_terminal_readers(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :registration_code => String.t(),
+              :metadata => String.t() | map(),
+              :location => String.t(),
+              :label => String.t(),
+              :expand => [String.t()]
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -162,7 +186,7 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_readers_reader_cancel_action(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers_reader_cancel_action(%ExOAPI.Client{} = client, body, reader) do
@@ -181,8 +205,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   """
 
-  @spec post_terminal_connection_tokens(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_terminal_connection_tokens(
+          client :: ExOAPI.Client.t(),
+          body :: %{:location => String.t(), :expand => [String.t()]} | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_terminal_connection_tokens(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -200,7 +226,7 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec delete_terminal_configurations_configuration(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           configuration :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_terminal_configurations_configuration(%ExOAPI.Client{} = client, body, configuration) do
@@ -221,7 +247,82 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_configurations_configuration(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :verifone_P400 => String.t() | %{:splashscreen => String.t()},
+              :tipping =>
+                String.t()
+                | %{
+                    :usd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :sgd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :sek => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :nzd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :nok => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :myr => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :hkd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :gbp => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :eur => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :dkk => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :chf => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :cad => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :aud => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    }
+                  },
+              :expand => [String.t()],
+              :bbpos_wisepos_e => String.t() | %{:splashscreen => String.t()}
+            }
+            | map(),
           configuration :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_configurations_configuration(%ExOAPI.Client{} = client, body, configuration) do
@@ -269,7 +370,7 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec delete_terminal_locations_location(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           location :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_terminal_locations_location(%ExOAPI.Client{} = client, body, location) do
@@ -290,7 +391,22 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_locations_location(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :display_name => String.t(),
+              :configuration_overrides => String.t(),
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map(),
           location :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_locations_location(%ExOAPI.Client{} = client, body, location) do
@@ -333,8 +449,25 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   """
 
-  @spec post_terminal_locations(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_terminal_locations(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :display_name => String.t(),
+              :configuration_overrides => String.t(),
+              :address => %{
+                :state => String.t(),
+                :postal_code => String.t(),
+                :line2 => String.t(),
+                :line1 => String.t(),
+                :country => String.t(),
+                :city => String.t()
+              }
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_terminal_locations(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -376,8 +509,85 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   """
 
-  @spec post_terminal_configurations(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_terminal_configurations(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :verifone_P400 => %{:splashscreen => String.t()},
+              :tipping =>
+                String.t()
+                | %{
+                    :usd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :sgd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :sek => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :nzd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :nok => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :myr => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :hkd => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :gbp => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :eur => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :dkk => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :chf => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :cad => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    },
+                    :aud => %{
+                      :smart_tip_threshold => integer(),
+                      :percentages => [integer()],
+                      :fixed_amounts => [integer()]
+                    }
+                  },
+              :expand => [String.t()],
+              :bbpos_wisepos_e => %{:splashscreen => String.t()}
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_terminal_configurations(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -425,7 +635,20 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
 
   @spec post_terminal_readers_reader_set_reader_display(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :type => String.t() | :cart,
+              :expand => [String.t()],
+              :cart => %{
+                :total => integer(),
+                :tax => integer(),
+                :line_items => [
+                  %{:quantity => integer(), :description => String.t(), :amount => integer()}
+                ],
+                :currency => String.t()
+              }
+            }
+            | map(),
           reader :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_terminal_readers_reader_set_reader_display(%ExOAPI.Client{} = client, body, reader) do

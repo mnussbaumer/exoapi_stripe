@@ -4,8 +4,17 @@ defmodule ExOAPI.Stripe.SDK.Topups do
 
   """
 
-  @spec post_topups_topup(client :: ExOAPI.Client.t(), body :: map(), topup :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_topups_topup(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t()
+            }
+            | map(),
+          topup :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_topups_topup(%ExOAPI.Client{} = client, body, topup) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -45,7 +54,21 @@ defmodule ExOAPI.Stripe.SDK.Topups do
 
   """
 
-  @spec post_topups(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_topups(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_group => String.t(),
+              :statement_descriptor => String.t(),
+              :source => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_topups(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -93,8 +116,11 @@ defmodule ExOAPI.Stripe.SDK.Topups do
 
   """
 
-  @spec post_topups_topup_cancel(client :: ExOAPI.Client.t(), body :: map(), topup :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_topups_topup_cancel(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()]} | map(),
+          topup :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_topups_topup_cancel(%ExOAPI.Client{} = client, body, topup) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

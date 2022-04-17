@@ -33,8 +33,31 @@ defmodule ExOAPI.Stripe.SDK.Products do
 
   """
 
-  @spec post_products(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_products(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :url => String.t(),
+              :unit_label => String.t(),
+              :tax_code => String.t(),
+              :statement_descriptor => String.t(),
+              :shippable => boolean(),
+              :package_dimensions => %{
+                :width => number(),
+                :weight => number(),
+                :length => number(),
+                :height => number()
+              },
+              :name => String.t(),
+              :metadata => map(),
+              :images => [String.t()],
+              :id => String.t(),
+              :expand => [String.t()],
+              :description => String.t(),
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_products(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -86,7 +109,7 @@ defmodule ExOAPI.Stripe.SDK.Products do
 
   """
 
-  @spec delete_products_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
+  @spec delete_products_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
           {:ok, any()} | {:error, any()}
   def delete_products_id(%ExOAPI.Client{} = client, body, id) do
     client
@@ -104,8 +127,33 @@ defmodule ExOAPI.Stripe.SDK.Products do
 
   """
 
-  @spec post_products_id(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_products_id(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :url => String.t(),
+              :unit_label => String.t(),
+              :tax_code => String.t(),
+              :statement_descriptor => String.t(),
+              :shippable => boolean(),
+              :package_dimensions =>
+                String.t()
+                | %{
+                    :width => number(),
+                    :weight => number(),
+                    :length => number(),
+                    :height => number()
+                  },
+              :name => String.t(),
+              :metadata => String.t() | map(),
+              :images => String.t() | [String.t()],
+              :expand => [String.t()],
+              :description => String.t(),
+              :active => boolean()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_products_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

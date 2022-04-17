@@ -8,15 +8,15 @@ defmodule ExOAPI.Stripe.MixProject do
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      source_url: "https://github.com/mnussbaumer/ex_oapi",
-      homepage_url: "https://hexdocs.pm/ex_oapi/readme.html",
+      source_url: "https://github.com/mnussbaumer/exoapi_stripe",
+      homepage_url: "https://hexdocs.pm/exoapi_stripe/readme.html",
       description:
         ~s(The Stripe REST API. Please see https://stripe.com/docs/api for more details.),
       package: [
         licenses: ["MIT"],
         exclude_patterns: [~r/.*~$/, ~r/#.*#$/],
         links: %{
-          "github/readme" => "https://github.com/mnussbaumer/ex_oapi"
+          "github/readme" => "https://github.com/mnussbaumer/exoapi_stripe"
         }
       ],
       docs: [
@@ -34,7 +34,7 @@ defmodule ExOAPI.Stripe.MixProject do
 
   defp deps do
     [
-      {:ex_oapi, "~> 0.1.1"},
+      {:ex_oapi, "~> 0.1.2"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
     ]
   end

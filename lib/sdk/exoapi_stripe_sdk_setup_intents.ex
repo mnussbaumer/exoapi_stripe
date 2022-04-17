@@ -6,7 +6,48 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
 
   @spec post_setup_intents_intent(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :payment_method_types => [String.t()],
+              :payment_method_options => %{
+                :us_bank_account => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits
+                },
+                :sepa_debit => %{:mandate_options => %{}},
+                :card => %{
+                  :request_three_d_secure => String.t() | :any | :automatic,
+                  :mandate_options => %{
+                    :supported_types => [String.t() | :india],
+                    :start_date => integer(),
+                    :reference => String.t(),
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :sporadic | :week | :year,
+                    :end_date => integer(),
+                    :description => String.t(),
+                    :currency => String.t(),
+                    :amount_type => String.t() | :fixed | :maximum,
+                    :amount => integer()
+                  }
+                },
+                :acss_debit => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits,
+                  :mandate_options => %{
+                    :transaction_type => String.t() | :business | :personal,
+                    :payment_schedule => String.t() | :combined | :interval | :sporadic,
+                    :interval_description => String.t(),
+                    :default_for => [String.t() | :invoice | :subscription],
+                    :custom_mandate_url => String.t()
+                  },
+                  :currency => String.t() | :cad | :usd
+                }
+              },
+              :payment_method => String.t(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t(),
+              :customer => String.t()
+            }
+            | map(),
           intent :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_setup_intents_intent(%ExOAPI.Client{} = client, body, intent) do
@@ -67,7 +108,61 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
 
   @spec post_setup_intents_intent_confirm(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :return_url => String.t(),
+              :payment_method_options => %{
+                :us_bank_account => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits
+                },
+                :sepa_debit => %{:mandate_options => %{}},
+                :card => %{
+                  :request_three_d_secure => String.t() | :any | :automatic,
+                  :mandate_options => %{
+                    :supported_types => [String.t() | :india],
+                    :start_date => integer(),
+                    :reference => String.t(),
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :sporadic | :week | :year,
+                    :end_date => integer(),
+                    :description => String.t(),
+                    :currency => String.t(),
+                    :amount_type => String.t() | :fixed | :maximum,
+                    :amount => integer()
+                  }
+                },
+                :acss_debit => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits,
+                  :mandate_options => %{
+                    :transaction_type => String.t() | :business | :personal,
+                    :payment_schedule => String.t() | :combined | :interval | :sporadic,
+                    :interval_description => String.t(),
+                    :default_for => [String.t() | :invoice | :subscription],
+                    :custom_mandate_url => String.t()
+                  },
+                  :currency => String.t() | :cad | :usd
+                }
+              },
+              :payment_method => String.t(),
+              :mandate_data =>
+                %{
+                  :customer_acceptance => %{
+                    :type => String.t() | :online,
+                    :online => %{:user_agent => String.t(), :ip_address => String.t()}
+                  }
+                }
+                | %{
+                    :customer_acceptance => %{
+                      :type => String.t() | :offline | :online,
+                      :online => %{:user_agent => String.t(), :ip_address => String.t()},
+                      :offline => %{},
+                      :accepted_at => integer()
+                    }
+                  },
+              :expand => [String.t()],
+              :client_secret => String.t()
+            }
+            | map(),
           intent :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_setup_intents_intent_confirm(%ExOAPI.Client{} = client, body, intent) do
@@ -88,7 +183,14 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
 
   @spec post_setup_intents_intent_verify_microdeposits(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :expand => [String.t()],
+              :descriptor_code => String.t(),
+              :client_secret => String.t(),
+              :amounts => [integer()]
+            }
+            | map(),
           intent :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_setup_intents_intent_verify_microdeposits(%ExOAPI.Client{} = client, body, intent) do
@@ -111,7 +213,13 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
 
   @spec post_setup_intents_intent_cancel(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :expand => [String.t()],
+              :cancellation_reason =>
+                String.t() | :abandoned | :duplicate | :requested_by_customer
+            }
+            | map(),
           intent :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_setup_intents_intent_cancel(%ExOAPI.Client{} = client, body, intent) do
@@ -133,8 +241,64 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
 
   """
 
-  @spec post_setup_intents(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_setup_intents(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :usage => String.t() | :off_session | :on_session,
+              :single_use => %{:currency => String.t(), :amount => integer()},
+              :return_url => String.t(),
+              :payment_method_types => [String.t()],
+              :payment_method_options => %{
+                :us_bank_account => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits
+                },
+                :sepa_debit => %{:mandate_options => %{}},
+                :card => %{
+                  :request_three_d_secure => String.t() | :any | :automatic,
+                  :mandate_options => %{
+                    :supported_types => [String.t() | :india],
+                    :start_date => integer(),
+                    :reference => String.t(),
+                    :interval_count => integer(),
+                    :interval => String.t() | :day | :month | :sporadic | :week | :year,
+                    :end_date => integer(),
+                    :description => String.t(),
+                    :currency => String.t(),
+                    :amount_type => String.t() | :fixed | :maximum,
+                    :amount => integer()
+                  }
+                },
+                :acss_debit => %{
+                  :verification_method => String.t() | :automatic | :instant | :microdeposits,
+                  :mandate_options => %{
+                    :transaction_type => String.t() | :business | :personal,
+                    :payment_schedule => String.t() | :combined | :interval | :sporadic,
+                    :interval_description => String.t(),
+                    :default_for => [String.t() | :invoice | :subscription],
+                    :custom_mandate_url => String.t()
+                  },
+                  :currency => String.t() | :cad | :usd
+                }
+              },
+              :payment_method => String.t(),
+              :on_behalf_of => String.t(),
+              :metadata => map(),
+              :mandate_data => %{
+                :customer_acceptance => %{
+                  :type => String.t() | :offline | :online,
+                  :online => %{:user_agent => String.t(), :ip_address => String.t()},
+                  :offline => %{},
+                  :accepted_at => integer()
+                }
+              },
+              :expand => [String.t()],
+              :description => String.t(),
+              :customer => String.t(),
+              :confirm => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_setup_intents(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

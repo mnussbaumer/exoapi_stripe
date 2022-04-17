@@ -4,8 +4,11 @@ defmodule ExOAPI.Stripe.SDK.EphemeralKeys do
 
   """
 
-  @spec delete_ephemeral_keys_key(client :: ExOAPI.Client.t(), body :: map(), key :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec delete_ephemeral_keys_key(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()]} | map(),
+          key :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def delete_ephemeral_keys_key(%ExOAPI.Client{} = client, body, key) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -22,8 +25,12 @@ defmodule ExOAPI.Stripe.SDK.EphemeralKeys do
 
   """
 
-  @spec post_ephemeral_keys(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_ephemeral_keys(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{:issuing_card => String.t(), :expand => [String.t()], :customer => String.t()}
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_ephemeral_keys(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

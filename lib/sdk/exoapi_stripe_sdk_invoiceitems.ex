@@ -4,8 +4,36 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
 
   """
 
-  @spec post_invoiceitems(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_invoiceitems(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :unit_amount_decimal => String.t(),
+              :unit_amount => integer(),
+              :tax_rates => [String.t()],
+              :subscription => String.t(),
+              :quantity => integer(),
+              :price_data => %{
+                :unit_amount_decimal => String.t(),
+                :unit_amount => integer(),
+                :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                :product => String.t(),
+                :currency => String.t()
+              },
+              :price => String.t(),
+              :period => %{:start => integer(), :end => integer()},
+              :metadata => String.t() | map(),
+              :invoice => String.t(),
+              :expand => [String.t()],
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :discountable => boolean(),
+              :description => String.t(),
+              :customer => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_invoiceitems(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -57,7 +85,7 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
 
   @spec delete_invoiceitems_invoiceitem(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           invoiceitem :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_invoiceitems_invoiceitem(%ExOAPI.Client{} = client, body, invoiceitem) do
@@ -78,7 +106,29 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
 
   @spec post_invoiceitems_invoiceitem(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :unit_amount_decimal => String.t(),
+              :unit_amount => integer(),
+              :tax_rates => String.t() | [String.t()],
+              :quantity => integer(),
+              :price_data => %{
+                :unit_amount_decimal => String.t(),
+                :unit_amount => integer(),
+                :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+                :product => String.t(),
+                :currency => String.t()
+              },
+              :price => String.t(),
+              :period => %{:start => integer(), :end => integer()},
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :discounts => String.t() | [%{:discount => String.t(), :coupon => String.t()}],
+              :discountable => boolean(),
+              :description => String.t(),
+              :amount => integer()
+            }
+            | map(),
           invoiceitem :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_invoiceitems_invoiceitem(%ExOAPI.Client{} = client, body, invoiceitem) do

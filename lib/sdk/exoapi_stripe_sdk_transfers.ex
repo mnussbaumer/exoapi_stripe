@@ -8,8 +8,19 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
 
   """
 
-  @spec post_transfers_id_reversals(client :: ExOAPI.Client.t(), body :: map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_transfers_id_reversals(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :refund_application_fee => boolean(),
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t(),
+              :amount => integer()
+            }
+            | map(),
+          id :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_transfers_id_reversals(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -56,8 +67,22 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
 
   """
 
-  @spec post_transfers(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_transfers(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :transfer_group => String.t(),
+              :source_type => String.t() | :bank_account | :card | :fpx,
+              :source_transaction => String.t(),
+              :metadata => map(),
+              :expand => [String.t()],
+              :destination => String.t(),
+              :description => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_transfers(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -109,7 +134,7 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
 
   @spec post_transfers_transfer_reversals_id(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           transfer :: String.t(),
           id :: String.t()
         ) :: {:ok, any()} | {:error, any()}
@@ -159,7 +184,13 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
 
   @spec post_transfers_transfer(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :metadata => String.t() | map(),
+              :expand => [String.t()],
+              :description => String.t()
+            }
+            | map(),
           transfer :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_transfers_transfer(%ExOAPI.Client{} = client, body, transfer) do

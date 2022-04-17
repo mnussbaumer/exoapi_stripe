@@ -4,8 +4,10 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
 
   """
 
-  @spec post_apple_pay_domains(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_apple_pay_domains(
+          client :: ExOAPI.Client.t(),
+          body :: %{:expand => [String.t()], :domain_name => String.t()} | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_apple_pay_domains(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -51,7 +53,7 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
 
   @spec delete_apple_pay_domains_domain(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{} | map(),
           domain :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def delete_apple_pay_domains_domain(%ExOAPI.Client{} = client, body, domain) do

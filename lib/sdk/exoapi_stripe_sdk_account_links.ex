@@ -4,8 +4,19 @@ defmodule ExOAPI.Stripe.SDK.AccountLinks do
 
   """
 
-  @spec post_account_links(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_account_links(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :type => String.t() | :account_onboarding | :account_update,
+              :return_url => String.t(),
+              :refresh_url => String.t(),
+              :expand => [String.t()],
+              :collect => String.t() | :currently_due | :eventually_due,
+              :account => String.t()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_account_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

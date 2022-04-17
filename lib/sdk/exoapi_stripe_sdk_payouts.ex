@@ -8,7 +8,22 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
 
   """
 
-  @spec post_payouts(client :: ExOAPI.Client.t(), body :: map()) :: {:ok, any()} | {:error, any()}
+  @spec post_payouts(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :statement_descriptor => String.t(),
+              :source_type => String.t() | :bank_account | :card | :fpx,
+              :method => String.t() | :instant | :standard,
+              :metadata => map(),
+              :expand => [String.t()],
+              :destination => String.t(),
+              :description => String.t(),
+              :currency => String.t(),
+              :amount => integer()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_payouts(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -58,8 +73,11 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
 
   """
 
-  @spec post_payouts_payout(client :: ExOAPI.Client.t(), body :: map(), payout :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_payouts_payout(
+          client :: ExOAPI.Client.t(),
+          body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
+          payout :: String.t()
+        ) :: {:ok, any()} | {:error, any()}
   def post_payouts_payout(%ExOAPI.Client{} = client, body, payout) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -101,7 +119,7 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
 
   @spec post_payouts_payout_cancel(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           payout :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payouts_payout_cancel(%ExOAPI.Client{} = client, body, payout) do
@@ -124,7 +142,7 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
 
   @spec post_payouts_payout_reverse(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:metadata => map(), :expand => [String.t()]} | map(),
           payout :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_payouts_payout_reverse(%ExOAPI.Client{} = client, body, payout) do

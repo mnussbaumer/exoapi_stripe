@@ -6,7 +6,20 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
 
   @spec post_tax_rates_tax_rate(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{
+              :tax_type =>
+                String.t() | :gst | :hst | :jct | :pst | :qst | :rst | :sales_tax | :vat,
+              :state => String.t(),
+              :metadata => String.t() | map(),
+              :jurisdiction => String.t(),
+              :expand => [String.t()],
+              :display_name => String.t(),
+              :description => String.t(),
+              :country => String.t(),
+              :active => boolean()
+            }
+            | map(),
           tax_rate :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_tax_rates_tax_rate(%ExOAPI.Client{} = client, body, tax_rate) do
@@ -48,8 +61,25 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
 
   """
 
-  @spec post_tax_rates(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_tax_rates(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :tax_type =>
+                String.t() | :gst | :hst | :jct | :pst | :qst | :rst | :sales_tax | :vat,
+              :state => String.t(),
+              :percentage => number(),
+              :metadata => map(),
+              :jurisdiction => String.t(),
+              :inclusive => boolean(),
+              :expand => [String.t()],
+              :display_name => String.t(),
+              :description => String.t(),
+              :country => String.t(),
+              :active => boolean()
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_tax_rates(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

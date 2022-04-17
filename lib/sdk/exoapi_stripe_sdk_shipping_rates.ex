@@ -4,8 +4,30 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
 
   """
 
-  @spec post_shipping_rates(client :: ExOAPI.Client.t(), body :: map()) ::
-          {:ok, any()} | {:error, any()}
+  @spec post_shipping_rates(
+          client :: ExOAPI.Client.t(),
+          body ::
+            %{
+              :type => String.t() | :fixed_amount,
+              :tax_code => String.t(),
+              :tax_behavior => String.t() | :exclusive | :inclusive | :unspecified,
+              :metadata => map(),
+              :fixed_amount => %{:currency => String.t(), :amount => integer()},
+              :expand => [String.t()],
+              :display_name => String.t(),
+              :delivery_estimate => %{
+                :minimum => %{
+                  :value => integer(),
+                  :unit => String.t() | :business_day | :day | :hour | :month | :week
+                },
+                :maximum => %{
+                  :value => integer(),
+                  :unit => String.t() | :business_day | :day | :hour | :month | :week
+                }
+              }
+            }
+            | map()
+        ) :: {:ok, any()} | {:error, any()}
   def post_shipping_rates(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -55,7 +77,9 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
 
   @spec post_shipping_rates_shipping_rate_token(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body ::
+            %{:metadata => String.t() | map(), :expand => [String.t()], :active => boolean()}
+            | map(),
           shipping_rate_token :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_shipping_rates_shipping_rate_token(

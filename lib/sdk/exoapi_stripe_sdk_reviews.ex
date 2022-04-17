@@ -57,7 +57,7 @@ defmodule ExOAPI.Stripe.SDK.Reviews do
 
   @spec post_reviews_review_approve(
           client :: ExOAPI.Client.t(),
-          body :: map(),
+          body :: %{:expand => [String.t()]} | map(),
           review :: String.t()
         ) :: {:ok, any()} | {:error, any()}
   def post_reviews_review_approve(%ExOAPI.Client{} = client, body, review) do
