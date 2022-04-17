@@ -49,7 +49,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def post_setup_intents_intent(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -74,7 +76,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
           client :: ExOAPI.Client.t(),
           intent :: String.t(),
           list(get_setup_intents_intent_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def get_setup_intents_intent(%ExOAPI.Client{} = client, intent, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -164,7 +168,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def post_setup_intents_intent_confirm(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -192,7 +198,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def post_setup_intents_intent_verify_microdeposits(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -221,7 +229,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def post_setup_intents_intent_cancel(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -298,7 +308,9 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
               :confirm => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SetupIntent.t() | map()}
+          | {:error, any()}
   def post_setup_intents(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -322,7 +334,16 @@ defmodule ExOAPI.Stripe.SDK.SetupIntents do
           | {:customer, String.t()}
           | {:created, String.t()}
   @spec get_setup_intents(client :: ExOAPI.Client.t(), list(get_setup_intents_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.SetupIntent.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_setup_intents(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

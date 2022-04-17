@@ -10,7 +10,10 @@ defmodule ExOAPI.Stripe.SDK.Checkout do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           session :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Checkout_session.t() | map()}
+          | {:error, any()}
   def post_checkout_sessions_session_expire(%ExOAPI.Client{} = client, body, session) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -35,7 +38,17 @@ defmodule ExOAPI.Stripe.SDK.Checkout do
           client :: ExOAPI.Client.t(),
           session :: String.t(),
           list(get_checkout_sessions_session_line_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Item.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_checkout_sessions_session_line_items(%ExOAPI.Client{} = client, session, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -517,7 +530,10 @@ defmodule ExOAPI.Stripe.SDK.Checkout do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Checkout_session.t() | map()}
+          | {:error, any()}
   def post_checkout_sessions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -540,7 +556,16 @@ defmodule ExOAPI.Stripe.SDK.Checkout do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_checkout_sessions(client :: ExOAPI.Client.t(), list(get_checkout_sessions_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Checkout_session.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_checkout_sessions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -567,7 +592,10 @@ defmodule ExOAPI.Stripe.SDK.Checkout do
           client :: ExOAPI.Client.t(),
           session :: String.t(),
           list(get_checkout_sessions_session_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Checkout_session.t() | map()}
+          | {:error, any()}
   def get_checkout_sessions_session(%ExOAPI.Client{} = client, session, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

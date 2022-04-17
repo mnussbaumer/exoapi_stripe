@@ -26,7 +26,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           session :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationSession.t()
+           | map()}
+          | {:error, any()}
   def post_identity_verification_sessions_session_redact(%ExOAPI.Client{} = client, body, session) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -49,7 +54,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           session :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationSession.t()
+           | map()}
+          | {:error, any()}
   def post_identity_verification_sessions_session_cancel(%ExOAPI.Client{} = client, body, session) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -92,7 +102,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
               :expand => [String.t()]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationSession.t()
+           | map()}
+          | {:error, any()}
   def post_identity_verification_sessions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -117,7 +132,17 @@ defmodule ExOAPI.Stripe.SDK.Identity do
   @spec get_identity_verification_sessions(
           client :: ExOAPI.Client.t(),
           list(get_identity_verification_sessions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Identity_verificationSession.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_identity_verification_sessions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -144,7 +169,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
           client :: ExOAPI.Client.t(),
           report :: String.t(),
           list(get_identity_verification_reports_report_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationReport.t()
+           | map()}
+          | {:error, any()}
   def get_identity_verification_reports_report(%ExOAPI.Client{} = client, report, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -173,7 +203,17 @@ defmodule ExOAPI.Stripe.SDK.Identity do
   @spec get_identity_verification_reports(
           client :: ExOAPI.Client.t(),
           list(get_identity_verification_reports_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Identity_verificationReport.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_identity_verification_reports(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -220,7 +260,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
             }
             | map(),
           session :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationSession.t()
+           | map()}
+          | {:error, any()}
   def post_identity_verification_sessions_session(%ExOAPI.Client{} = client, body, session) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -244,7 +289,12 @@ defmodule ExOAPI.Stripe.SDK.Identity do
           client :: ExOAPI.Client.t(),
           session :: String.t(),
           list(get_identity_verification_sessions_session_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Identity_verificationSession.t()
+           | map()}
+          | {:error, any()}
   def get_identity_verification_sessions_session(%ExOAPI.Client{} = client, session, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

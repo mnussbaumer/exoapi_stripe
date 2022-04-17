@@ -5,7 +5,8 @@ defmodule ExOAPI.Stripe.SDK.Plans do
   """
 
   @spec delete_plans_plan(client :: ExOAPI.Client.t(), body :: %{} | map(), plan :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedPlan.t() | map()}
+          | {:error, any()}
   def delete_plans_plan(%ExOAPI.Client{} = client, body, plan) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -35,7 +36,9 @@ defmodule ExOAPI.Stripe.SDK.Plans do
             }
             | map(),
           plan :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Plan.t() | map()}
+          | {:error, any()}
   def post_plans_plan(%ExOAPI.Client{} = client, body, plan) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -56,7 +59,9 @@ defmodule ExOAPI.Stripe.SDK.Plans do
           client :: ExOAPI.Client.t(),
           plan :: String.t(),
           list(get_plans_plan_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Plan.t() | map()}
+          | {:error, any()}
   def get_plans_plan(%ExOAPI.Client{} = client, plan, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -117,7 +122,9 @@ defmodule ExOAPI.Stripe.SDK.Plans do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Plan.t() | map()}
+          | {:error, any()}
   def post_plans(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -141,7 +148,16 @@ defmodule ExOAPI.Stripe.SDK.Plans do
           | {:created, String.t()}
           | {:active, String.t()}
   @spec get_plans(client :: ExOAPI.Client.t(), list(get_plans_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Plan.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_plans(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

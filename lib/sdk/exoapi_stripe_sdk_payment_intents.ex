@@ -11,7 +11,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
           body ::
             %{:expand => [String.t()], :currency => String.t(), :amount => integer()} | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_apply_customer_balance(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -36,7 +38,19 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_payment_intents_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.PaymentIntent.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payment_intents_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -68,7 +82,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_verify_microdeposits(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -99,7 +115,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_cancel(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -537,7 +555,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -560,7 +580,16 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
           | {:customer, String.t()}
           | {:created, String.t()}
   @spec get_payment_intents(client :: ExOAPI.Client.t(), list(get_payment_intents_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.PaymentIntent.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payment_intents(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -986,7 +1015,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1011,7 +1042,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
           client :: ExOAPI.Client.t(),
           intent :: String.t(),
           list(get_payment_intents_intent_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def get_payment_intents_intent(%ExOAPI.Client{} = client, intent, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1067,7 +1100,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_increment_authorization(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1101,7 +1136,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_capture(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1550,7 +1587,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentIntents do
             }
             | map(),
           intent :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentIntent.t() | map()}
+          | {:error, any()}
   def post_payment_intents_intent_confirm(%ExOAPI.Client{} = client, body, intent) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           quote :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def post_quotes_quote_accept(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -73,7 +75,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
             }
             | map(),
           quote :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def post_quotes_quote(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -94,7 +98,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           quote :: String.t(),
           list(get_quotes_quote_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def get_quotes_quote(%ExOAPI.Client{} = client, quote, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -117,7 +123,7 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           quote :: String.t(),
           list(get_quotes_quote_pdf_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) :: {:ok, ExOAPI.Stripe.Schemas.Error.t() | String.t() | map()} | {:error, any()}
   def get_quotes_quote_pdf(%ExOAPI.Client{} = client, quote, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -144,7 +150,17 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           quote :: String.t(),
           list(get_quotes_quote_computed_upfront_line_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Item.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_quotes_quote_computed_upfront_line_items(%ExOAPI.Client{} = client, quote, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -170,7 +186,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           quote :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def post_quotes_quote_cancel(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -235,7 +253,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
               :application_fee_amount => String.t() | integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def post_quotes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -259,7 +279,16 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           | {:ending_before, String.t()}
           | {:customer, String.t()}
   @spec get_quotes(client :: ExOAPI.Client.t(), list(get_quotes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Quote.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_quotes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -291,7 +320,17 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           quote :: String.t(),
           list(get_quotes_quote_line_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Item.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_quotes_quote_line_items(%ExOAPI.Client{} = client, quote, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -317,7 +356,9 @@ defmodule ExOAPI.Stripe.SDK.Quotes do
           client :: ExOAPI.Client.t(),
           body :: %{:expires_at => integer(), :expand => [String.t()]} | map(),
           quote :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Quote.t() | map()}
+          | {:error, any()}
   def post_quotes_quote_finalize(%ExOAPI.Client{} = client, body, quote) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

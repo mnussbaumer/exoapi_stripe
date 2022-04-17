@@ -8,7 +8,10 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           subscription_exposed_id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedDiscount.t() | map()}
+          | {:error, any()}
   def delete_subscriptions_subscription_exposed_id_discount(
         %ExOAPI.Client{} = client,
         body,
@@ -37,7 +40,19 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_subscriptions_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Subscription.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_subscriptions_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -199,7 +214,9 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
               ]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Subscription.t() | map()}
+          | {:error, any()}
   def post_subscriptions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -228,7 +245,16 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
           | {:created, String.t()}
           | {:collection_method, String.t()}
   @spec get_subscriptions(client :: ExOAPI.Client.t(), list(get_subscriptions_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Subscription.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_subscriptions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -266,7 +292,9 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
           body ::
             %{:prorate => boolean(), :invoice_now => boolean(), :expand => [String.t()]} | map(),
           subscription_exposed_id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Subscription.t() | map()}
+          | {:error, any()}
   def delete_subscriptions_subscription_exposed_id(
         %ExOAPI.Client{} = client,
         body,
@@ -431,7 +459,9 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
             }
             | map(),
           subscription_exposed_id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Subscription.t() | map()}
+          | {:error, any()}
   def post_subscriptions_subscription_exposed_id(
         %ExOAPI.Client{} = client,
         body,
@@ -456,7 +486,9 @@ defmodule ExOAPI.Stripe.SDK.Subscriptions do
           client :: ExOAPI.Client.t(),
           subscription_exposed_id :: String.t(),
           list(get_subscriptions_subscription_exposed_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Subscription.t() | map()}
+          | {:error, any()}
   def get_subscriptions_subscription_exposed_id(
         %ExOAPI.Client{} = client,
         subscription_exposed_id,

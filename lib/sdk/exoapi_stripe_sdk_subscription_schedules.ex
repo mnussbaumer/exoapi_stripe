@@ -9,7 +9,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
           body ::
             %{:prorate => boolean(), :invoice_now => boolean(), :expand => [String.t()]} | map(),
           schedule :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()
+           | map()}
+          | {:error, any()}
   def post_subscription_schedules_schedule_cancel(%ExOAPI.Client{} = client, body, schedule) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -106,7 +111,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
             }
             | map(),
           schedule :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()
+           | map()}
+          | {:error, any()}
   def post_subscription_schedules_schedule(%ExOAPI.Client{} = client, body, schedule) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -127,7 +137,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
           client :: ExOAPI.Client.t(),
           schedule :: String.t(),
           list(get_subscription_schedules_schedule_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()
+           | map()}
+          | {:error, any()}
   def get_subscription_schedules_schedule(%ExOAPI.Client{} = client, schedule, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -150,7 +165,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
           client :: ExOAPI.Client.t(),
           body :: %{:preserve_cancel_date => boolean(), :expand => [String.t()]} | map(),
           schedule :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()
+           | map()}
+          | {:error, any()}
   def post_subscription_schedules_schedule_release(%ExOAPI.Client{} = client, body, schedule) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -247,7 +267,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
               :customer => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()
+           | map()}
+          | {:error, any()}
   def post_subscription_schedules(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -276,7 +301,17 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionSchedules do
   @spec get_subscription_schedules(
           client :: ExOAPI.Client.t(),
           list(get_subscription_schedules_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.SubscriptionSchedule.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_subscription_schedules(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

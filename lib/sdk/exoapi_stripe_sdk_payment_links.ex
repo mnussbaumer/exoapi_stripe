@@ -12,7 +12,17 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
           client :: ExOAPI.Client.t(),
           payment_link :: String.t(),
           list(get_payment_links_payment_link_line_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Item.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payment_links_payment_link_line_items(
         %ExOAPI.Client{} = client,
         payment_link,
@@ -314,7 +324,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentLink.t() | map()}
+          | {:error, any()}
   def post_payment_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -336,7 +348,16 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
           | {:ending_before, String.t()}
           | {:active, String.t()}
   @spec get_payment_links(client :: ExOAPI.Client.t(), list(get_payment_links_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.PaymentLink.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payment_links(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -632,7 +653,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
             }
             | map(),
           payment_link :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentLink.t() | map()}
+          | {:error, any()}
   def post_payment_links_payment_link(%ExOAPI.Client{} = client, body, payment_link) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -653,7 +676,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentLinks do
           client :: ExOAPI.Client.t(),
           payment_link :: String.t(),
           list(get_payment_links_payment_link_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentLink.t() | map()}
+          | {:error, any()}
   def get_payment_links_payment_link(%ExOAPI.Client{} = client, payment_link, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

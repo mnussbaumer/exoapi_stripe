@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Stripe3dSecure do
           client :: ExOAPI.Client.t(),
           three_d_secure :: String.t(),
           list(get3d_secure_three_d_secure_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ThreeDSecure.t() | map()}
+          | {:error, any()}
   def get3d_secure_three_d_secure(%ExOAPI.Client{} = client, three_d_secure, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -39,7 +41,9 @@ defmodule ExOAPI.Stripe.SDK.Stripe3dSecure do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ThreeDSecure.t() | map()}
+          | {:error, any()}
   def post3d_secure(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

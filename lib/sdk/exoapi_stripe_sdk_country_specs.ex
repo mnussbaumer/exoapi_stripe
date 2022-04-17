@@ -9,7 +9,16 @@ defmodule ExOAPI.Stripe.SDK.CountrySpecs do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_country_specs(client :: ExOAPI.Client.t(), list(get_country_specs_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.CountrySpec.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_country_specs(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -34,7 +43,9 @@ defmodule ExOAPI.Stripe.SDK.CountrySpecs do
           client :: ExOAPI.Client.t(),
           country :: String.t(),
           list(get_country_specs_country_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CountrySpec.t() | map()}
+          | {:error, any()}
   def get_country_specs_country(%ExOAPI.Client{} = client, country, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

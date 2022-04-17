@@ -14,7 +14,12 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
             }
             | map(),
           item :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedSubscriptionItem.t()
+           | map()}
+          | {:error, any()}
   def delete_subscription_items_item(%ExOAPI.Client{} = client, body, item) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -64,7 +69,10 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
             }
             | map(),
           item :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SubscriptionItem.t() | map()}
+          | {:error, any()}
   def post_subscription_items_item(%ExOAPI.Client{} = client, body, item) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -85,7 +93,10 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
           client :: ExOAPI.Client.t(),
           item :: String.t(),
           list(get_subscription_items_item_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SubscriptionItem.t() | map()}
+          | {:error, any()}
   def get_subscription_items_item(%ExOAPI.Client{} = client, item, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -121,7 +132,9 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
             }
             | map(),
           subscription_item :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.UsageRecord.t() | map()}
+          | {:error, any()}
   def post_subscription_items_subscription_item_usage_records(
         %ExOAPI.Client{} = client,
         body,
@@ -174,7 +187,10 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
               :billing_thresholds => String.t() | %{:usage_gte => integer()}
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SubscriptionItem.t() | map()}
+          | {:error, any()}
   def post_subscription_items(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -198,7 +214,17 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
           client :: ExOAPI.Client.t(),
           subscription :: String.t(),
           list(get_subscription_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.SubscriptionItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_subscription_items(%ExOAPI.Client{} = client, subscription, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -230,7 +256,17 @@ defmodule ExOAPI.Stripe.SDK.SubscriptionItems do
           client :: ExOAPI.Client.t(),
           subscription_item :: String.t(),
           list(get_subscription_items_subscription_item_usage_record_summaries_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.UsageRecordSummary.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_subscription_items_subscription_item_usage_record_summaries(
         %ExOAPI.Client{} = client,
         subscription_item,

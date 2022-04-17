@@ -10,7 +10,10 @@ defmodule ExOAPI.Stripe.SDK.Bitcoin do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_bitcoin_receivers_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.BitcoinReceiver.t() | map()}
+          | {:error, any()}
   def get_bitcoin_receivers_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -40,7 +43,17 @@ defmodule ExOAPI.Stripe.SDK.Bitcoin do
           client :: ExOAPI.Client.t(),
           receiver :: String.t(),
           list(get_bitcoin_receivers_receiver_transactions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BitcoinTransaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_bitcoin_receivers_receiver_transactions(%ExOAPI.Client{} = client, receiver, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -73,7 +86,16 @@ defmodule ExOAPI.Stripe.SDK.Bitcoin do
           | {:ending_before, String.t()}
           | {:active, String.t()}
   @spec get_bitcoin_receivers(client :: ExOAPI.Client.t(), list(get_bitcoin_receivers_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BitcoinReceiver.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_bitcoin_receivers(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -108,7 +130,17 @@ defmodule ExOAPI.Stripe.SDK.Bitcoin do
   @spec get_bitcoin_transactions(
           client :: ExOAPI.Client.t(),
           list(get_bitcoin_transactions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BitcoinTransaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_bitcoin_transactions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

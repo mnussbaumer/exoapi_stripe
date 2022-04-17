@@ -194,7 +194,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentMethod.t() | map()}
+          | {:error, any()}
   def post_payment_methods(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -219,7 +221,17 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
           client :: ExOAPI.Client.t(),
           type :: String.t(),
           list(get_payment_methods_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.PaymentMethod.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payment_methods(%ExOAPI.Client{} = client, type, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -256,7 +268,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()], :customer => String.t()} | map(),
           payment_method :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentMethod.t() | map()}
+          | {:error, any()}
   def post_payment_methods_payment_method_attach(%ExOAPI.Client{} = client, body, payment_method) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -299,7 +313,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
             }
             | map(),
           payment_method :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentMethod.t() | map()}
+          | {:error, any()}
   def post_payment_methods_payment_method(%ExOAPI.Client{} = client, body, payment_method) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -320,7 +336,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
           client :: ExOAPI.Client.t(),
           payment_method :: String.t(),
           list(get_payment_methods_payment_method_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentMethod.t() | map()}
+          | {:error, any()}
   def get_payment_methods_payment_method(%ExOAPI.Client{} = client, payment_method, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -343,7 +361,9 @@ defmodule ExOAPI.Stripe.SDK.PaymentMethods do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           payment_method :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PaymentMethod.t() | map()}
+          | {:error, any()}
   def post_payment_methods_payment_method_detach(%ExOAPI.Client{} = client, body, payment_method) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

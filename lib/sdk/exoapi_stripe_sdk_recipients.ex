@@ -7,7 +7,9 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
   """
 
   @spec delete_recipients_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedRecipient.t() | map()}
+          | {:error, any()}
   def delete_recipients_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -46,7 +48,9 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Recipient.t() | map()}
+          | {:error, any()}
   def post_recipients_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -69,7 +73,13 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_recipients_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedRecipient.t()
+           | ExOAPI.Stripe.Schemas.Recipient.t()
+           | map()}
+          | {:error, any()}
   def get_recipients_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -106,7 +116,9 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
               :bank_account => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Recipient.t() | map()}
+          | {:error, any()}
   def post_recipients(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -132,7 +144,16 @@ defmodule ExOAPI.Stripe.SDK.Recipients do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_recipients(client :: ExOAPI.Client.t(), list(get_recipients_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Recipient.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_recipients(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

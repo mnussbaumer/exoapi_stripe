@@ -10,7 +10,9 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
             %{:metadata => String.t() | map(), :expand => [String.t()], :active => boolean()}
             | map(),
           promotion_code :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PromotionCode.t() | map()}
+          | {:error, any()}
   def post_promotion_codes_promotion_code(%ExOAPI.Client{} = client, body, promotion_code) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -31,7 +33,9 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
           client :: ExOAPI.Client.t(),
           promotion_code :: String.t(),
           list(get_promotion_codes_promotion_code_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PromotionCode.t() | map()}
+          | {:error, any()}
   def get_promotion_codes_promotion_code(%ExOAPI.Client{} = client, promotion_code, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -69,7 +73,9 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.PromotionCode.t() | map()}
+          | {:error, any()}
   def post_promotion_codes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -95,7 +101,16 @@ defmodule ExOAPI.Stripe.SDK.PromotionCodes do
           | {:code, String.t()}
           | {:active, String.t()}
   @spec get_promotion_codes(client :: ExOAPI.Client.t(), list(get_promotion_codes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.PromotionCode.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_promotion_codes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

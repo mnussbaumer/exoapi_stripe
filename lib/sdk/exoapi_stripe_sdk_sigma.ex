@@ -8,7 +8,10 @@ defmodule ExOAPI.Stripe.SDK.Sigma do
           client :: ExOAPI.Client.t(),
           scheduled_query_run :: String.t(),
           list(get_sigma_scheduled_query_runs_scheduled_query_run_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ScheduledQueryRun.t() | map()}
+          | {:error, any()}
   def get_sigma_scheduled_query_runs_scheduled_query_run(
         %ExOAPI.Client{} = client,
         scheduled_query_run,
@@ -38,7 +41,17 @@ defmodule ExOAPI.Stripe.SDK.Sigma do
   @spec get_sigma_scheduled_query_runs(
           client :: ExOAPI.Client.t(),
           list(get_sigma_scheduled_query_runs_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.ScheduledQueryRun.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_sigma_scheduled_query_runs(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

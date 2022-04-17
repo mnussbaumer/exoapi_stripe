@@ -60,7 +60,12 @@ defmodule ExOAPI.Stripe.SDK.BillingPortal do
             }
             | map(),
           configuration :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.BillingPortal_configuration.t()
+           | map()}
+          | {:error, any()}
   def post_billing_portal_configurations_configuration(
         %ExOAPI.Client{} = client,
         body,
@@ -85,7 +90,12 @@ defmodule ExOAPI.Stripe.SDK.BillingPortal do
           client :: ExOAPI.Client.t(),
           configuration :: String.t(),
           list(get_billing_portal_configurations_configuration_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.BillingPortal_configuration.t()
+           | map()}
+          | {:error, any()}
   def get_billing_portal_configurations_configuration(
         %ExOAPI.Client{} = client,
         configuration,
@@ -162,7 +172,12 @@ defmodule ExOAPI.Stripe.SDK.BillingPortal do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.BillingPortal_configuration.t()
+           | map()}
+          | {:error, any()}
   def post_billing_portal_configurations(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -187,7 +202,17 @@ defmodule ExOAPI.Stripe.SDK.BillingPortal do
   @spec get_billing_portal_configurations(
           client :: ExOAPI.Client.t(),
           list(get_billing_portal_configurations_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BillingPortal_configuration.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_billing_portal_configurations(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -270,7 +295,12 @@ defmodule ExOAPI.Stripe.SDK.BillingPortal do
               :configuration => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.BillingPortal_session.t()
+           | map()}
+          | {:error, any()}
   def post_billing_portal_sessions(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

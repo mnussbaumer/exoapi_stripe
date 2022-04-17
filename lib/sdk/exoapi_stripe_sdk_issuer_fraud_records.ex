@@ -12,7 +12,10 @@ defmodule ExOAPI.Stripe.SDK.IssuerFraudRecords do
           client :: ExOAPI.Client.t(),
           issuer_fraud_record :: String.t(),
           list(get_issuer_fraud_records_issuer_fraud_record_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.IssuerFraudRecord.t() | map()}
+          | {:error, any()}
   def get_issuer_fraud_records_issuer_fraud_record(
         %ExOAPI.Client{} = client,
         issuer_fraud_record,
@@ -45,7 +48,17 @@ defmodule ExOAPI.Stripe.SDK.IssuerFraudRecords do
   @spec get_issuer_fraud_records(
           client :: ExOAPI.Client.t(),
           list(get_issuer_fraud_records_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.IssuerFraudRecord.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuer_fraud_records(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

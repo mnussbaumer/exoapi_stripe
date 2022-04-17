@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           person :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedPerson.t() | map()}
+          | {:error, any()}
   def delete_account_persons_person(%ExOAPI.Client{} = client, body, person) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -95,7 +97,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
             }
             | map(),
           person :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def post_account_persons_person(%ExOAPI.Client{} = client, body, person) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -116,7 +120,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           person :: String.t(),
           list(get_account_persons_person_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def get_account_persons_person(%ExOAPI.Client{} = client, person, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -139,7 +145,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           body :: %{:requested => boolean(), :expand => [String.t()]} | map(),
           capability :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Capability.t() | map()}
+          | {:error, any()}
   def post_account_capabilities_capability(%ExOAPI.Client{} = client, body, capability) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -160,7 +168,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           capability :: String.t(),
           list(get_account_capabilities_capability_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Capability.t() | map()}
+          | {:error, any()}
   def get_account_capabilities_capability(%ExOAPI.Client{} = client, capability, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -183,7 +193,12 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedExternalAccount.t()
+           | map()}
+          | {:error, any()}
   def delete_account_external_accounts_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -224,7 +239,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def post_account_external_accounts_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -245,7 +263,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_account_external_accounts_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def get_account_external_accounts_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -333,7 +354,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
               :account => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def post_account_persons(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -355,7 +378,16 @@ defmodule ExOAPI.Stripe.SDK.Account do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_account_persons(client :: ExOAPI.Client.t(), list(get_account_persons_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Person.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_account_persons(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -380,7 +412,17 @@ defmodule ExOAPI.Stripe.SDK.Account do
   @spec get_account_capabilities(
           client :: ExOAPI.Client.t(),
           list(get_account_capabilities_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Capability.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_account_capabilities(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -467,7 +509,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
               :account => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def post_account_people(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -489,7 +533,16 @@ defmodule ExOAPI.Stripe.SDK.Account do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_account_people(client :: ExOAPI.Client.t(), list(get_account_people_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Person.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_account_people(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -515,7 +568,12 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedExternalAccount.t()
+           | map()}
+          | {:error, any()}
   def delete_account_bank_accounts_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -556,7 +614,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def post_account_bank_accounts_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -577,7 +638,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_account_bank_accounts_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def get_account_bank_accounts_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -618,7 +682,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
                   }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def post_account_external_accounts(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -641,7 +708,17 @@ defmodule ExOAPI.Stripe.SDK.Account do
   @spec get_account_external_accounts(
           client :: ExOAPI.Client.t(),
           list(get_account_external_accounts_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Card.t() | ExOAPI.Stripe.Schemas.BankAccount.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_account_external_accounts(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -666,7 +743,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           person :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedPerson.t() | map()}
+          | {:error, any()}
   def delete_account_people_person(%ExOAPI.Client{} = client, body, person) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -753,7 +832,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
             }
             | map(),
           person :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def post_account_people_person(%ExOAPI.Client{} = client, body, person) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -774,7 +855,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           client :: ExOAPI.Client.t(),
           person :: String.t(),
           list(get_account_people_person_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Person.t() | map()}
+          | {:error, any()}
   def get_account_people_person(%ExOAPI.Client{} = client, person, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -798,7 +881,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
   """
 
   @spec delete_account(client :: ExOAPI.Client.t(), body :: %{:account => String.t()} | map()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedAccount.t() | map()}
+          | {:error, any()}
   def delete_account(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1062,7 +1147,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
               :account_token => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Account.t() | map()}
+          | {:error, any()}
   def post_account(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1079,7 +1166,8 @@ defmodule ExOAPI.Stripe.SDK.Account do
   """
   @type get_account_opts :: {:expand, String.t()}
   @spec get_account(client :: ExOAPI.Client.t(), list(get_account_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Account.t() | map()}
+          | {:error, any()}
   def get_account(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1104,7 +1192,9 @@ defmodule ExOAPI.Stripe.SDK.Account do
           body ::
             %{:redirect_url => String.t(), :expand => [String.t()], :account => String.t()}
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.LoginLink.t() | map()}
+          | {:error, any()}
   def post_account_login_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1142,7 +1232,10 @@ defmodule ExOAPI.Stripe.SDK.Account do
                   }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExternalAccount.t() | map()}
+          | {:error, any()}
   def post_account_bank_accounts(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

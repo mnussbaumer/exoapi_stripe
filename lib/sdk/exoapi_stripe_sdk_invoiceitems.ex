@@ -33,7 +33,9 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoiceitem.t() | map()}
+          | {:error, any()}
   def post_invoiceitems(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -58,7 +60,16 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
           | {:customer, String.t()}
           | {:created, String.t()}
   @spec get_invoiceitems(client :: ExOAPI.Client.t(), list(get_invoiceitems_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Invoiceitem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_invoiceitems(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -87,7 +98,10 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           invoiceitem :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedInvoiceitem.t() | map()}
+          | {:error, any()}
   def delete_invoiceitems_invoiceitem(%ExOAPI.Client{} = client, body, invoiceitem) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -130,7 +144,9 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
             }
             | map(),
           invoiceitem :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoiceitem.t() | map()}
+          | {:error, any()}
   def post_invoiceitems_invoiceitem(%ExOAPI.Client{} = client, body, invoiceitem) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -151,7 +167,9 @@ defmodule ExOAPI.Stripe.SDK.Invoiceitems do
           client :: ExOAPI.Client.t(),
           invoiceitem :: String.t(),
           list(get_invoiceitems_invoiceitem_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoiceitem.t() | map()}
+          | {:error, any()}
   def get_invoiceitems_invoiceitem(%ExOAPI.Client{} = client, invoiceitem, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

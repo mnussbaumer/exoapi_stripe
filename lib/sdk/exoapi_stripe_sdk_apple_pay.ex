@@ -7,7 +7,10 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
   @spec post_apple_pay_domains(
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()], :domain_name => String.t()} | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ApplePayDomain.t() | map()}
+          | {:error, any()}
   def post_apple_pay_domains(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -29,7 +32,16 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
           | {:ending_before, String.t()}
           | {:domain_name, String.t()}
   @spec get_apple_pay_domains(client :: ExOAPI.Client.t(), list(get_apple_pay_domains_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.ApplePayDomain.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_apple_pay_domains(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -55,7 +67,12 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           domain :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedApplePayDomain.t()
+           | map()}
+          | {:error, any()}
   def delete_apple_pay_domains_domain(%ExOAPI.Client{} = client, body, domain) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -76,7 +93,10 @@ defmodule ExOAPI.Stripe.SDK.ApplePay do
           client :: ExOAPI.Client.t(),
           domain :: String.t(),
           list(get_apple_pay_domains_domain_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ApplePayDomain.t() | map()}
+          | {:error, any()}
   def get_apple_pay_domains_domain(%ExOAPI.Client{} = client, domain, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

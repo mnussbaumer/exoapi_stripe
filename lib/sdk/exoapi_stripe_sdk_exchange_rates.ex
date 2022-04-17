@@ -9,7 +9,16 @@ defmodule ExOAPI.Stripe.SDK.ExchangeRates do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_exchange_rates(client :: ExOAPI.Client.t(), list(get_exchange_rates_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.ExchangeRate.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_exchange_rates(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -34,7 +43,9 @@ defmodule ExOAPI.Stripe.SDK.ExchangeRates do
           client :: ExOAPI.Client.t(),
           rate_id :: String.t(),
           list(get_exchange_rates_rate_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ExchangeRate.t() | map()}
+          | {:error, any()}
   def get_exchange_rates_rate_id(%ExOAPI.Client{} = client, rate_id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

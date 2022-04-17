@@ -23,7 +23,9 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Payout.t() | map()}
+          | {:error, any()}
   def post_payouts(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -48,7 +50,16 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
           | {:created, String.t()}
           | {:arrival_date, String.t()}
   @spec get_payouts(client :: ExOAPI.Client.t(), list(get_payouts_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Payout.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_payouts(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -77,7 +88,9 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           payout :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Payout.t() | map()}
+          | {:error, any()}
   def post_payouts_payout(%ExOAPI.Client{} = client, body, payout) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -98,7 +111,9 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
           client :: ExOAPI.Client.t(),
           payout :: String.t(),
           list(get_payouts_payout_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Payout.t() | map()}
+          | {:error, any()}
   def get_payouts_payout(%ExOAPI.Client{} = client, payout, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -121,7 +136,9 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           payout :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Payout.t() | map()}
+          | {:error, any()}
   def post_payouts_payout_cancel(%ExOAPI.Client{} = client, body, payout) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -144,7 +161,9 @@ defmodule ExOAPI.Stripe.SDK.Payouts do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => map(), :expand => [String.t()]} | map(),
           payout :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Payout.t() | map()}
+          | {:error, any()}
   def post_payouts_payout_reverse(%ExOAPI.Client{} = client, body, payout) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

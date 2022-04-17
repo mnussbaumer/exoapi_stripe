@@ -20,7 +20,10 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TransferReversal.t() | map()}
+          | {:error, any()}
   def post_transfers_id_reversals(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -45,7 +48,17 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_transfers_id_reversals_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.TransferReversal.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_transfers_id_reversals(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -82,7 +95,9 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Transfer.t() | map()}
+          | {:error, any()}
   def post_transfers(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -106,7 +121,16 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
           | {:destination, String.t()}
           | {:created, String.t()}
   @spec get_transfers(client :: ExOAPI.Client.t(), list(get_transfers_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Transfer.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_transfers(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -137,7 +161,10 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           transfer :: String.t(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TransferReversal.t() | map()}
+          | {:error, any()}
   def post_transfers_transfer_reversals_id(%ExOAPI.Client{} = client, body, transfer, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -160,7 +187,10 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
           transfer :: String.t(),
           id :: String.t(),
           list(get_transfers_transfer_reversals_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TransferReversal.t() | map()}
+          | {:error, any()}
   def get_transfers_transfer_reversals_id(%ExOAPI.Client{} = client, transfer, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -192,7 +222,9 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
             }
             | map(),
           transfer :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Transfer.t() | map()}
+          | {:error, any()}
   def post_transfers_transfer(%ExOAPI.Client{} = client, body, transfer) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -213,7 +245,9 @@ defmodule ExOAPI.Stripe.SDK.Transfers do
           client :: ExOAPI.Client.t(),
           transfer :: String.t(),
           list(get_transfers_transfer_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Transfer.t() | map()}
+          | {:error, any()}
   def get_transfers_transfer(%ExOAPI.Client{} = client, transfer, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

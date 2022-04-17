@@ -14,7 +14,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             }
             | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_terminal_readers_reader_process_payment_intent(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -35,7 +38,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_reader.t()
+           | map()}
+          | {:error, any()}
   def delete_terminal_readers_reader(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -58,7 +66,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             %{:metadata => String.t() | map(), :label => String.t(), :expand => [String.t()]}
             | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_reader.t()
+           | ExOAPI.Stripe.Schemas.Terminal_reader.t()
+           | map()}
+          | {:error, any()}
   def post_terminal_readers_reader(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -79,7 +93,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           reader :: String.t(),
           list(get_terminal_readers_reader_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_reader.t()
+           | ExOAPI.Stripe.Schemas.Terminal_reader.t()
+           | map()}
+          | {:error, any()}
   def get_terminal_readers_reader(%ExOAPI.Client{} = client, reader, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -108,7 +128,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             }
             | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_terminal_readers_reader_process_setup_intent(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -136,7 +159,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
               :expand => [String.t()]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_terminal_readers(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -160,7 +186,16 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           | {:ending_before, String.t()}
           | {:device_type, String.t()}
   @spec get_terminal_readers(client :: ExOAPI.Client.t(), list(get_terminal_readers_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Terminal_reader.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_terminal_readers(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -188,7 +223,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_terminal_readers_reader_cancel_action(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -208,7 +246,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
   @spec post_terminal_connection_tokens(
           client :: ExOAPI.Client.t(),
           body :: %{:location => String.t(), :expand => [String.t()]} | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Terminal_connectionToken.t()
+           | map()}
+          | {:error, any()}
   def post_terminal_connection_tokens(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -228,7 +271,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           configuration :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_configuration.t()
+           | map()}
+          | {:error, any()}
   def delete_terminal_configurations_configuration(%ExOAPI.Client{} = client, body, configuration) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -324,7 +372,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             }
             | map(),
           configuration :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Terminal_configuration.t()
+           | map()}
+          | {:error, any()}
   def post_terminal_configurations_configuration(%ExOAPI.Client{} = client, body, configuration) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -345,7 +398,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           configuration :: String.t(),
           list(get_terminal_configurations_configuration_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_configuration.t()
+           | ExOAPI.Stripe.Schemas.Terminal_configuration.t()
+           | map()}
+          | {:error, any()}
   def get_terminal_configurations_configuration(
         %ExOAPI.Client{} = client,
         configuration,
@@ -372,7 +431,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           location :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_location.t()
+           | map()}
+          | {:error, any()}
   def delete_terminal_locations_location(%ExOAPI.Client{} = client, body, location) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -408,7 +472,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             }
             | map(),
           location :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_location.t()
+           | ExOAPI.Stripe.Schemas.Terminal_location.t()
+           | map()}
+          | {:error, any()}
   def post_terminal_locations_location(%ExOAPI.Client{} = client, body, location) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -429,7 +499,13 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           client :: ExOAPI.Client.t(),
           location :: String.t(),
           list(get_terminal_locations_location_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTerminal_location.t()
+           | ExOAPI.Stripe.Schemas.Terminal_location.t()
+           | map()}
+          | {:error, any()}
   def get_terminal_locations_location(%ExOAPI.Client{} = client, location, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -467,7 +543,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_location.t() | map()}
+          | {:error, any()}
   def post_terminal_locations(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -488,7 +567,16 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_terminal_locations(client :: ExOAPI.Client.t(), list(get_terminal_locations_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Terminal_location.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_terminal_locations(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -587,7 +675,12 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
               :bbpos_wisepos_e => %{:splashscreen => String.t()}
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Terminal_configuration.t()
+           | map()}
+          | {:error, any()}
   def post_terminal_configurations(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -611,7 +704,17 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
   @spec get_terminal_configurations(
           client :: ExOAPI.Client.t(),
           list(get_terminal_configurations_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Terminal_configuration.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_terminal_configurations(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -650,7 +753,10 @@ defmodule ExOAPI.Stripe.SDK.Terminal do
             }
             | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_terminal_readers_reader_set_reader_display(%ExOAPI.Client{} = client, body, reader) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

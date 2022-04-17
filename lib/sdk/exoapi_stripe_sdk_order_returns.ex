@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.OrderReturns do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_order_returns_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.OrderReturn.t() | map()}
+          | {:error, any()}
   def get_order_returns_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -34,7 +36,16 @@ defmodule ExOAPI.Stripe.SDK.OrderReturns do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_order_returns(client :: ExOAPI.Client.t(), list(get_order_returns_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.OrderReturn.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_order_returns(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

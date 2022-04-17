@@ -12,7 +12,19 @@ defmodule ExOAPI.Stripe.SDK.Products do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_products_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Product.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_products_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -57,7 +69,9 @@ defmodule ExOAPI.Stripe.SDK.Products do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Product.t() | map()}
+          | {:error, any()}
   def post_products(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -83,7 +97,16 @@ defmodule ExOAPI.Stripe.SDK.Products do
           | {:created, String.t()}
           | {:active, String.t()}
   @spec get_products(client :: ExOAPI.Client.t(), list(get_products_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Product.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_products(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -110,7 +133,9 @@ defmodule ExOAPI.Stripe.SDK.Products do
   """
 
   @spec delete_products_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedProduct.t() | map()}
+          | {:error, any()}
   def delete_products_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -153,7 +178,9 @@ defmodule ExOAPI.Stripe.SDK.Products do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Product.t() | map()}
+          | {:error, any()}
   def post_products_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -174,7 +201,9 @@ defmodule ExOAPI.Stripe.SDK.Products do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_products_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Product.t() | map()}
+          | {:error, any()}
   def get_products_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

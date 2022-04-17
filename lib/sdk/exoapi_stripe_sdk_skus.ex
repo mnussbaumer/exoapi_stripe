@@ -30,7 +30,9 @@ defmodule ExOAPI.Stripe.SDK.Skus do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Sku.t() | map()}
+          | {:error, any()}
   def post_skus(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -56,7 +58,16 @@ defmodule ExOAPI.Stripe.SDK.Skus do
           | {:attributes, String.t()}
           | {:active, String.t()}
   @spec get_skus(client :: ExOAPI.Client.t(), list(get_skus_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Sku.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_skus(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -83,7 +94,8 @@ defmodule ExOAPI.Stripe.SDK.Skus do
   """
 
   @spec delete_skus_id(client :: ExOAPI.Client.t(), body :: %{} | map(), id :: String.t()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedSku.t() | map()}
+          | {:error, any()}
   def delete_skus_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -130,7 +142,9 @@ defmodule ExOAPI.Stripe.SDK.Skus do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Sku.t() | map()}
+          | {:error, any()}
   def post_skus_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -148,7 +162,12 @@ defmodule ExOAPI.Stripe.SDK.Skus do
   """
   @type get_skus_id_opts :: {:expand, String.t()}
   @spec get_skus_id(client :: ExOAPI.Client.t(), id :: String.t(), list(get_skus_id_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedSku.t()
+           | ExOAPI.Stripe.Schemas.Sku.t()
+           | map()}
+          | {:error, any()}
   def get_skus_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

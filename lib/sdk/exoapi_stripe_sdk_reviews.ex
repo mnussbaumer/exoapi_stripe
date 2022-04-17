@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Reviews do
           client :: ExOAPI.Client.t(),
           review :: String.t(),
           list(get_reviews_review_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Review.t() | map()}
+          | {:error, any()}
   def get_reviews_review(%ExOAPI.Client{} = client, review, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -33,7 +35,16 @@ defmodule ExOAPI.Stripe.SDK.Reviews do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_reviews(client :: ExOAPI.Client.t(), list(get_reviews_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Review.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_reviews(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -59,7 +70,9 @@ defmodule ExOAPI.Stripe.SDK.Reviews do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           review :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Review.t() | map()}
+          | {:error, any()}
   def post_reviews_review_approve(%ExOAPI.Client{} = client, body, review) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

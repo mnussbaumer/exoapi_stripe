@@ -17,7 +17,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
             }
             | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice_pay(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -42,7 +44,17 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           invoice :: String.t(),
           list(get_invoices_invoice_lines_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.LineItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_invoices_invoice_lines(%ExOAPI.Client{} = client, invoice, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -72,7 +84,19 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_invoices_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Invoice.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_invoices_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -99,7 +123,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice_send(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -141,7 +167,8 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           | {:coupon, String.t()}
           | {:automatic_tax, String.t()}
   @spec get_invoices_upcoming(client :: ExOAPI.Client.t(), list(get_invoices_upcoming_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def get_invoices_upcoming(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -259,7 +286,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
               :account_tax_ids => String.t() | [String.t()]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -286,7 +315,16 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           | {:created, String.t()}
           | {:collection_method, String.t()}
   @spec get_invoices(client :: ExOAPI.Client.t(), list(get_invoices_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Invoice.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_invoices(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -317,7 +355,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice_mark_uncollectible(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -338,7 +378,10 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedInvoice.t() | map()}
+          | {:error, any()}
   def delete_invoices_invoice(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -437,7 +480,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
             }
             | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -458,7 +503,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           invoice :: String.t(),
           list(get_invoices_invoice_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def get_invoices_invoice(%ExOAPI.Client{} = client, invoice, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -481,7 +528,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()], :auto_advance => boolean()} | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice_finalize(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -524,7 +573,17 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
   @spec get_invoices_upcoming_lines(
           client :: ExOAPI.Client.t(),
           list(get_invoices_upcoming_lines_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.LineItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_invoices_upcoming_lines(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -569,7 +628,9 @@ defmodule ExOAPI.Stripe.SDK.Invoices do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           invoice :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Invoice.t() | map()}
+          | {:error, any()}
   def post_invoices_invoice_void(%ExOAPI.Client{} = client, body, invoice) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

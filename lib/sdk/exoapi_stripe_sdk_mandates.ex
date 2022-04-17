@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Mandates do
           client :: ExOAPI.Client.t(),
           mandate :: String.t(),
           list(get_mandates_mandate_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Mandate.t() | map()}
+          | {:error, any()}
   def get_mandates_mandate(%ExOAPI.Client{} = client, mandate, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

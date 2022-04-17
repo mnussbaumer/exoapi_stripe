@@ -14,7 +14,9 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
               :expand => [String.t()]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FileLink.t() | map()}
+          | {:error, any()}
   def post_file_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -38,7 +40,16 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_file_links(client :: ExOAPI.Client.t(), list(get_file_links_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.FileLink.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_file_links(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -72,7 +83,9 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
             }
             | map(),
           link :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FileLink.t() | map()}
+          | {:error, any()}
   def post_file_links_link(%ExOAPI.Client{} = client, body, link) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -93,7 +106,9 @@ defmodule ExOAPI.Stripe.SDK.FileLinks do
           client :: ExOAPI.Client.t(),
           link :: String.t(),
           list(get_file_links_link_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FileLink.t() | map()}
+          | {:error, any()}
   def get_file_links_link(%ExOAPI.Client{} = client, link, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

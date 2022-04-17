@@ -8,7 +8,12 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
           client :: ExOAPI.Client.t(),
           body ::
             %{:name => String.t(), :frozen_time => integer(), :expand => [String.t()]} | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.TestHelpers_testClock.t()
+           | map()}
+          | {:error, any()}
   def post_test_helpers_test_clocks(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -31,7 +36,17 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
   @spec get_test_helpers_test_clocks(
           client :: ExOAPI.Client.t(),
           list(get_test_helpers_test_clocks_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.TestHelpers_testClock.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_test_helpers_test_clocks(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -56,7 +71,12 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           test_clock :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedTestHelpers_testClock.t()
+           | map()}
+          | {:error, any()}
   def delete_test_helpers_test_clocks_test_clock(%ExOAPI.Client{} = client, body, test_clock) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -77,7 +97,12 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
           client :: ExOAPI.Client.t(),
           test_clock :: String.t(),
           list(get_test_helpers_test_clocks_test_clock_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.TestHelpers_testClock.t()
+           | map()}
+          | {:error, any()}
   def get_test_helpers_test_clocks_test_clock(%ExOAPI.Client{} = client, test_clock, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -106,7 +131,10 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
             }
             | map(),
           reader :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Terminal_reader.t() | map()}
+          | {:error, any()}
   def post_test_helpers_terminal_readers_reader_present_payment_method(
         %ExOAPI.Client{} = client,
         body,
@@ -131,7 +159,12 @@ defmodule ExOAPI.Stripe.SDK.TestHelpers do
           client :: ExOAPI.Client.t(),
           body :: %{:frozen_time => integer(), :expand => [String.t()]} | map(),
           test_clock :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.TestHelpers_testClock.t()
+           | map()}
+          | {:error, any()}
   def post_test_helpers_test_clocks_test_clock_advance(
         %ExOAPI.Client{} = client,
         body,

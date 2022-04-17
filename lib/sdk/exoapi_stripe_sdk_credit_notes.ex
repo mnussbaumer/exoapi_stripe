@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CreditNote.t() | map()}
+          | {:error, any()}
   def post_credit_notes_id_void(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -67,7 +69,9 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CreditNote.t() | map()}
+          | {:error, any()}
   def post_credit_notes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -90,7 +94,16 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           | {:ending_before, String.t()}
           | {:customer, String.t()}
   @spec get_credit_notes(client :: ExOAPI.Client.t(), list(get_credit_notes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.CreditNote.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_credit_notes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -130,7 +143,17 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           invoice :: String.t(),
           list(get_credit_notes_preview_lines_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.CreditNoteLineItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_credit_notes_preview_lines(%ExOAPI.Client{} = client, invoice, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -165,7 +188,9 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => map(), :memo => String.t(), :expand => [String.t()]} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CreditNote.t() | map()}
+          | {:error, any()}
   def post_credit_notes_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -186,7 +211,9 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_credit_notes_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CreditNote.t() | map()}
+          | {:error, any()}
   def get_credit_notes_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -219,7 +246,9 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           invoice :: String.t(),
           list(get_credit_notes_preview_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.CreditNote.t() | map()}
+          | {:error, any()}
   def get_credit_notes_preview(%ExOAPI.Client{} = client, invoice, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -255,7 +284,17 @@ defmodule ExOAPI.Stripe.SDK.CreditNotes do
           client :: ExOAPI.Client.t(),
           credit_note :: String.t(),
           list(get_credit_notes_credit_note_lines_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.CreditNoteLineItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_credit_notes_credit_note_lines(%ExOAPI.Client{} = client, credit_note, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

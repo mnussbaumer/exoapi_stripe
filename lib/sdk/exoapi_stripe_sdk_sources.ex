@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Sources do
           client :: ExOAPI.Client.t(),
           body :: %{:values => [String.t()], :expand => [String.t()]} | map(),
           source :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Source.t() | map()}
+          | {:error, any()}
   def post_sources_source_verify(%ExOAPI.Client{} = client, body, source) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -31,7 +33,12 @@ defmodule ExOAPI.Stripe.SDK.Sources do
           source :: String.t(),
           mandate_notification :: String.t(),
           list(get_sources_source_mandate_notifications_mandate_notification_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.SourceMandateNotification.t()
+           | map()}
+          | {:error, any()}
   def get_sources_source_mandate_notifications_mandate_notification(
         %ExOAPI.Client{} = client,
         source,
@@ -123,7 +130,9 @@ defmodule ExOAPI.Stripe.SDK.Sources do
             }
             | map(),
           source :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Source.t() | map()}
+          | {:error, any()}
   def post_sources_source(%ExOAPI.Client{} = client, body, source) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -144,7 +153,9 @@ defmodule ExOAPI.Stripe.SDK.Sources do
           client :: ExOAPI.Client.t(),
           source :: String.t(),
           list(get_sources_source_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Source.t() | map()}
+          | {:error, any()}
   def get_sources_source(%ExOAPI.Client{} = client, source, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -238,7 +249,9 @@ defmodule ExOAPI.Stripe.SDK.Sources do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Source.t() | map()}
+          | {:error, any()}
   def post_sources(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -262,7 +275,17 @@ defmodule ExOAPI.Stripe.SDK.Sources do
           client :: ExOAPI.Client.t(),
           source :: String.t(),
           list(get_sources_source_source_transactions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.SourceTransaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_sources_source_source_transactions(%ExOAPI.Client{} = client, source, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -289,7 +312,10 @@ defmodule ExOAPI.Stripe.SDK.Sources do
           source_transaction :: String.t(),
           source :: String.t(),
           list(get_sources_source_source_transactions_source_transaction_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.SourceTransaction.t() | map()}
+          | {:error, any()}
   def get_sources_source_source_transactions_source_transaction(
         %ExOAPI.Client{} = client,
         source_transaction,

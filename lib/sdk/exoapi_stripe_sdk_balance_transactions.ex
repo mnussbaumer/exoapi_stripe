@@ -10,7 +10,10 @@ defmodule ExOAPI.Stripe.SDK.BalanceTransactions do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_balance_transactions_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.BalanceTransaction.t() | map()}
+          | {:error, any()}
   def get_balance_transactions_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -43,7 +46,17 @@ defmodule ExOAPI.Stripe.SDK.BalanceTransactions do
   @spec get_balance_transactions(
           client :: ExOAPI.Client.t(),
           list(get_balance_transactions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BalanceTransaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_balance_transactions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -21,7 +21,9 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
             }
             | map(),
           tax_rate :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TaxRate.t() | map()}
+          | {:error, any()}
   def post_tax_rates_tax_rate(%ExOAPI.Client{} = client, body, tax_rate) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -42,7 +44,9 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
           client :: ExOAPI.Client.t(),
           tax_rate :: String.t(),
           list(get_tax_rates_tax_rate_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TaxRate.t() | map()}
+          | {:error, any()}
   def get_tax_rates_tax_rate(%ExOAPI.Client{} = client, tax_rate, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -79,7 +83,9 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TaxRate.t() | map()}
+          | {:error, any()}
   def post_tax_rates(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -103,7 +109,16 @@ defmodule ExOAPI.Stripe.SDK.TaxRates do
           | {:created, String.t()}
           | {:active, String.t()}
   @spec get_tax_rates(client :: ExOAPI.Client.t(), list(get_tax_rates_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.TaxRate.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_tax_rates(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

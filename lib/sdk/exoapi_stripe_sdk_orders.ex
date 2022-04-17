@@ -23,7 +23,9 @@ defmodule ExOAPI.Stripe.SDK.Orders do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.OrderReturn.t() | map()}
+          | {:error, any()}
   def post_orders_id_returns(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -53,7 +55,9 @@ defmodule ExOAPI.Stripe.SDK.Orders do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Order.t() | map()}
+          | {:error, any()}
   def post_orders_id(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -71,7 +75,8 @@ defmodule ExOAPI.Stripe.SDK.Orders do
   """
   @type get_orders_id_opts :: {:expand, String.t()}
   @spec get_orders_id(client :: ExOAPI.Client.t(), id :: String.t(), list(get_orders_id_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Order.t() | map()}
+          | {:error, any()}
   def get_orders_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -124,7 +129,9 @@ defmodule ExOAPI.Stripe.SDK.Orders do
               :coupon => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Order.t() | map()}
+          | {:error, any()}
   def post_orders(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -151,7 +158,16 @@ defmodule ExOAPI.Stripe.SDK.Orders do
           | {:customer, String.t()}
           | {:created, String.t()}
   @spec get_orders(client :: ExOAPI.Client.t(), list(get_orders_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Order.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_orders(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -191,7 +207,9 @@ defmodule ExOAPI.Stripe.SDK.Orders do
             }
             | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Order.t() | map()}
+          | {:error, any()}
   def post_orders_id_pay(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

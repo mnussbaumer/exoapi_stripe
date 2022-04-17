@@ -12,7 +12,16 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
           | {:created, String.t()}
           | {:charge, String.t()}
   @spec get_disputes(client :: ExOAPI.Client.t(), list(get_disputes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Dispute.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_disputes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -42,7 +51,9 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           dispute :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def post_disputes_dispute_close(%ExOAPI.Client{} = client, body, dispute) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -100,7 +111,9 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
             }
             | map(),
           dispute :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def post_disputes_dispute(%ExOAPI.Client{} = client, body, dispute) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -121,7 +134,9 @@ defmodule ExOAPI.Stripe.SDK.Disputes do
           client :: ExOAPI.Client.t(),
           dispute :: String.t(),
           list(get_disputes_dispute_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def get_disputes_dispute(%ExOAPI.Client{} = client, dispute, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

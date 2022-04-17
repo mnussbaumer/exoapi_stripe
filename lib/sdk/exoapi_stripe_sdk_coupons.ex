@@ -24,7 +24,9 @@ defmodule ExOAPI.Stripe.SDK.Coupons do
               :amount_off => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Coupon.t() | map()}
+          | {:error, any()}
   def post_coupons(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -46,7 +48,16 @@ defmodule ExOAPI.Stripe.SDK.Coupons do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_coupons(client :: ExOAPI.Client.t(), list(get_coupons_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Coupon.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_coupons(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -72,7 +83,9 @@ defmodule ExOAPI.Stripe.SDK.Coupons do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           coupon :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.DeletedCoupon.t() | map()}
+          | {:error, any()}
   def delete_coupons_coupon(%ExOAPI.Client{} = client, body, coupon) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -95,7 +108,9 @@ defmodule ExOAPI.Stripe.SDK.Coupons do
             %{:name => String.t(), :metadata => String.t() | map(), :expand => [String.t()]}
             | map(),
           coupon :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Coupon.t() | map()}
+          | {:error, any()}
   def post_coupons_coupon(%ExOAPI.Client{} = client, body, coupon) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -116,7 +131,9 @@ defmodule ExOAPI.Stripe.SDK.Coupons do
           client :: ExOAPI.Client.t(),
           coupon :: String.t(),
           list(get_coupons_coupon_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Coupon.t() | map()}
+          | {:error, any()}
   def get_coupons_coupon(%ExOAPI.Client{} = client, coupon, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

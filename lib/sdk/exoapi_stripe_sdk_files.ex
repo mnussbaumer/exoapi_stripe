@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Files do
           client :: ExOAPI.Client.t(),
           file :: String.t(),
           list(get_files_file_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.File.t() | map()}
+          | {:error, any()}
   def get_files_file(%ExOAPI.Client{} = client, file, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -30,7 +32,8 @@ defmodule ExOAPI.Stripe.SDK.Files do
   """
 
   @spec post_files(client :: ExOAPI.Client.t(), body :: Tesla.Multipart.t()) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.File.t() | map()}
+          | {:error, any()}
   def post_files(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -53,7 +56,16 @@ defmodule ExOAPI.Stripe.SDK.Files do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_files(client :: ExOAPI.Client.t(), list(get_files_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.File.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_files(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

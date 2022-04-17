@@ -18,7 +18,9 @@ defmodule ExOAPI.Stripe.SDK.Prices do
             }
             | map(),
           price :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Price.t() | map()}
+          | {:error, any()}
   def post_prices_price(%ExOAPI.Client{} = client, body, price) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -39,7 +41,9 @@ defmodule ExOAPI.Stripe.SDK.Prices do
           client :: ExOAPI.Client.t(),
           price :: String.t(),
           list(get_prices_price_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Price.t() | map()}
+          | {:error, any()}
   def get_prices_price(%ExOAPI.Client{} = client, price, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -105,7 +109,9 @@ defmodule ExOAPI.Stripe.SDK.Prices do
               :active => boolean()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Price.t() | map()}
+          | {:error, any()}
   def post_prices(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -133,7 +139,16 @@ defmodule ExOAPI.Stripe.SDK.Prices do
           | {:created, String.t()}
           | {:active, String.t()}
   @spec get_prices(client :: ExOAPI.Client.t(), list(get_prices_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Price.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_prices(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -169,7 +184,19 @@ defmodule ExOAPI.Stripe.SDK.Prices do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_prices_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Price.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_prices_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

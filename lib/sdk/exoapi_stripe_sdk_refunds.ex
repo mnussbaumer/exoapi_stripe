@@ -10,7 +10,9 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           refund :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def post_refunds_refund_cancel(%ExOAPI.Client{} = client, body, refund) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -33,7 +35,9 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           refund :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def post_refunds_refund(%ExOAPI.Client{} = client, body, refund) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -54,7 +58,9 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
           client :: ExOAPI.Client.t(),
           refund :: String.t(),
           list(get_refunds_refund_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def get_refunds_refund(%ExOAPI.Client{} = client, refund, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -87,7 +93,9 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def post_refunds(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -111,7 +119,16 @@ defmodule ExOAPI.Stripe.SDK.Refunds do
           | {:created, String.t()}
           | {:charge, String.t()}
   @spec get_refunds(client :: ExOAPI.Client.t(), list(get_refunds_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Refund.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_refunds(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

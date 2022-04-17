@@ -16,7 +16,9 @@ defmodule ExOAPI.Stripe.SDK.AccountLinks do
               :account => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.AccountLink.t() | map()}
+          | {:error, any()}
   def post_account_links(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -8,7 +8,9 @@ defmodule ExOAPI.Stripe.SDK.Tokens do
           client :: ExOAPI.Client.t(),
           token :: String.t(),
           list(get_tokens_token_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Token.t() | map()}
+          | {:error, any()}
   def get_tokens_token(%ExOAPI.Client{} = client, token, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -248,7 +250,9 @@ defmodule ExOAPI.Stripe.SDK.Tokens do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Token.t() | map()}
+          | {:error, any()}
   def post_tokens(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

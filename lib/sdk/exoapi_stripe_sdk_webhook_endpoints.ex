@@ -8,7 +8,12 @@ defmodule ExOAPI.Stripe.SDK.WebhookEndpoints do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           webhook_endpoint :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedWebhookEndpoint.t()
+           | map()}
+          | {:error, any()}
   def delete_webhook_endpoints_webhook_endpoint(%ExOAPI.Client{} = client, body, webhook_endpoint) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -229,7 +234,10 @@ defmodule ExOAPI.Stripe.SDK.WebhookEndpoints do
             }
             | map(),
           webhook_endpoint :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.WebhookEndpoint.t() | map()}
+          | {:error, any()}
   def post_webhook_endpoints_webhook_endpoint(%ExOAPI.Client{} = client, body, webhook_endpoint) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -250,7 +258,10 @@ defmodule ExOAPI.Stripe.SDK.WebhookEndpoints do
           client :: ExOAPI.Client.t(),
           webhook_endpoint :: String.t(),
           list(get_webhook_endpoints_webhook_endpoint_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.WebhookEndpoint.t() | map()}
+          | {:error, any()}
   def get_webhook_endpoints_webhook_endpoint(
         %ExOAPI.Client{} = client,
         webhook_endpoint,
@@ -574,7 +585,10 @@ defmodule ExOAPI.Stripe.SDK.WebhookEndpoints do
                 | :"2020-08-27"
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.WebhookEndpoint.t() | map()}
+          | {:error, any()}
   def post_webhook_endpoints(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -595,7 +609,16 @@ defmodule ExOAPI.Stripe.SDK.WebhookEndpoints do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_webhook_endpoints(client :: ExOAPI.Client.t(), list(get_webhook_endpoints_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.WebhookEndpoint.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_webhook_endpoints(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

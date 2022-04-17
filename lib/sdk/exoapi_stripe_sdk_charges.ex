@@ -18,7 +18,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
             }
             | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def post_charges_charge_refunds(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -43,7 +45,17 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           client :: ExOAPI.Client.t(),
           charge :: String.t(),
           list(get_charges_charge_refunds_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Refund.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_charges_charge_refunds(%ExOAPI.Client{} = client, charge, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -83,7 +95,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
             }
             | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Charge.t() | map()}
+          | {:error, any()}
   def post_charges_charge_capture(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -99,7 +113,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           client :: ExOAPI.Client.t(),
           body :: %{:expand => [String.t()]} | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def post_charges_charge_dispute_close(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -140,7 +156,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
             }
             | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Charge.t() | map()}
+          | {:error, any()}
   def post_charges_charge_refund(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -162,7 +180,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           refund :: String.t(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def post_charges_charge_refunds_refund(%ExOAPI.Client{} = client, body, refund, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -185,7 +205,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           refund :: String.t(),
           charge :: String.t(),
           list(get_charges_charge_refunds_refund_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Refund.t() | map()}
+          | {:error, any()}
   def get_charges_charge_refunds_refund(%ExOAPI.Client{} = client, refund, charge, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -259,7 +281,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
               :amount => integer()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Charge.t() | map()}
+          | {:error, any()}
   def post_charges(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -284,7 +308,16 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           | {:customer, String.t()}
           | {:created, String.t()}
   @spec get_charges(client :: ExOAPI.Client.t(), list(get_charges_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Charge.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_charges(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -337,7 +370,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
             }
             | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Charge.t() | map()}
+          | {:error, any()}
   def post_charges_charge(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -358,7 +393,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           client :: ExOAPI.Client.t(),
           charge :: String.t(),
           list(get_charges_charge_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Charge.t() | map()}
+          | {:error, any()}
   def get_charges_charge(%ExOAPI.Client{} = client, charge, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -385,7 +422,19 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           client :: ExOAPI.Client.t(),
           query :: String.t(),
           list(get_charges_search_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :total_count => integer(),
+               :object => String.t() | :search_result,
+               :next_page => String.t(),
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Charge.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_charges_search(%ExOAPI.Client{} = client, query, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -440,7 +489,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
             }
             | map(),
           charge :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def post_charges_charge_dispute(%ExOAPI.Client{} = client, body, charge) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -461,7 +512,9 @@ defmodule ExOAPI.Stripe.SDK.Charges do
           client :: ExOAPI.Client.t(),
           charge :: String.t(),
           list(get_charges_charge_dispute_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Dispute.t() | map()}
+          | {:error, any()}
   def get_charges_charge_dispute(%ExOAPI.Client{} = client, charge, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

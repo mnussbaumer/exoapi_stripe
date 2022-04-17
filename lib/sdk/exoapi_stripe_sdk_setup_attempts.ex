@@ -13,7 +13,17 @@ defmodule ExOAPI.Stripe.SDK.SetupAttempts do
           client :: ExOAPI.Client.t(),
           setup_intent :: String.t(),
           list(get_setup_attempts_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.SetupAttempt.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_setup_attempts(%ExOAPI.Client{} = client, setup_intent, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -27,7 +27,9 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ShippingRate.t() | map()}
+          | {:error, any()}
   def post_shipping_rates(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -51,7 +53,16 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
           | {:created, String.t()}
           | {:active, String.t()}
   @spec get_shipping_rates(client :: ExOAPI.Client.t(), list(get_shipping_rates_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.ShippingRate.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_shipping_rates(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -81,7 +92,9 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
             %{:metadata => String.t() | map(), :expand => [String.t()], :active => boolean()}
             | map(),
           shipping_rate_token :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ShippingRate.t() | map()}
+          | {:error, any()}
   def post_shipping_rates_shipping_rate_token(
         %ExOAPI.Client{} = client,
         body,
@@ -106,7 +119,9 @@ defmodule ExOAPI.Stripe.SDK.ShippingRates do
           client :: ExOAPI.Client.t(),
           shipping_rate_token :: String.t(),
           list(get_shipping_rates_shipping_rate_token_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ShippingRate.t() | map()}
+          | {:error, any()}
   def get_shipping_rates_shipping_rate_token(
         %ExOAPI.Client{} = client,
         shipping_rate_token,

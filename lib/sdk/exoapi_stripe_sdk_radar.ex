@@ -13,7 +13,17 @@ defmodule ExOAPI.Stripe.SDK.Radar do
   @spec get_radar_early_fraud_warnings(
           client :: ExOAPI.Client.t(),
           list(get_radar_early_fraud_warnings_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Radar_earlyFraudWarning.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_radar_early_fraud_warnings(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -40,7 +50,12 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           value_list :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedRadar_valueList.t()
+           | map()}
+          | {:error, any()}
   def delete_radar_value_lists_value_list(%ExOAPI.Client{} = client, body, value_list) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -68,7 +83,10 @@ defmodule ExOAPI.Stripe.SDK.Radar do
             }
             | map(),
           value_list :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Radar_valueList.t() | map()}
+          | {:error, any()}
   def post_radar_value_lists_value_list(%ExOAPI.Client{} = client, body, value_list) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -89,7 +107,10 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           value_list :: String.t(),
           list(get_radar_value_lists_value_list_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Radar_valueList.t() | map()}
+          | {:error, any()}
   def get_radar_value_lists_value_list(%ExOAPI.Client{} = client, value_list, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -112,7 +133,10 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           body ::
             %{:value_list => String.t(), :value => String.t(), :expand => [String.t()]} | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Radar_valueListItem.t() | map()}
+          | {:error, any()}
   def post_radar_value_list_items(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -138,7 +162,17 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           value_list :: String.t(),
           list(get_radar_value_list_items_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Radar_valueListItem.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_radar_value_list_items(%ExOAPI.Client{} = client, value_list, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -168,7 +202,12 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           early_fraud_warning :: String.t(),
           list(get_radar_early_fraud_warnings_early_fraud_warning_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Radar_earlyFraudWarning.t()
+           | map()}
+          | {:error, any()}
   def get_radar_early_fraud_warnings_early_fraud_warning(
         %ExOAPI.Client{} = client,
         early_fraud_warning,
@@ -211,7 +250,10 @@ defmodule ExOAPI.Stripe.SDK.Radar do
               :alias => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Radar_valueList.t() | map()}
+          | {:error, any()}
   def post_radar_value_lists(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -235,7 +277,16 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           | {:contains, String.t()}
           | {:alias, String.t()}
   @spec get_radar_value_lists(client :: ExOAPI.Client.t(), list(get_radar_value_lists_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Radar_valueList.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_radar_value_lists(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -263,7 +314,12 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           body :: %{} | map(),
           item :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.DeletedRadar_valueListItem.t()
+           | map()}
+          | {:error, any()}
   def delete_radar_value_list_items_item(%ExOAPI.Client{} = client, body, item) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -284,7 +340,10 @@ defmodule ExOAPI.Stripe.SDK.Radar do
           client :: ExOAPI.Client.t(),
           item :: String.t(),
           list(get_radar_value_list_items_item_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Radar_valueListItem.t() | map()}
+          | {:error, any()}
   def get_radar_value_list_items_item(%ExOAPI.Client{} = client, item, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

@@ -11,7 +11,9 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           id :: String.t(),
           fee :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FeeRefund.t() | map()}
+          | {:error, any()}
   def post_application_fees_fee_refunds_id(%ExOAPI.Client{} = client, body, id, fee) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -34,7 +36,9 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           id :: String.t(),
           fee :: String.t(),
           list(get_application_fees_fee_refunds_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FeeRefund.t() | map()}
+          | {:error, any()}
   def get_application_fees_fee_refunds_id(%ExOAPI.Client{} = client, id, fee, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -66,7 +70,9 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => map(), :expand => [String.t()], :amount => integer()} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.FeeRefund.t() | map()}
+          | {:error, any()}
   def post_application_fees_id_refunds(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -91,7 +97,17 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_application_fees_id_refunds_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.FeeRefund.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_application_fees_id_refunds(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -113,7 +129,10 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           body ::
             %{:expand => [String.t()], :directive => String.t(), :amount => integer()} | map(),
           id :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ApplicationFee.t() | map()}
+          | {:error, any()}
   def post_application_fees_id_refund(%ExOAPI.Client{} = client, body, id) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -137,7 +156,16 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           | {:created, String.t()}
           | {:charge, String.t()}
   @spec get_application_fees(client :: ExOAPI.Client.t(), list(get_application_fees_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.ApplicationFee.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_application_fees(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -164,7 +192,10 @@ defmodule ExOAPI.Stripe.SDK.ApplicationFees do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_application_fees_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.ApplicationFee.t() | map()}
+          | {:error, any()}
   def get_application_fees_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

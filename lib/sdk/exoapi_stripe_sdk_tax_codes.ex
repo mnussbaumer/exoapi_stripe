@@ -9,7 +9,16 @@ defmodule ExOAPI.Stripe.SDK.TaxCodes do
           | {:expand, String.t()}
           | {:ending_before, String.t()}
   @spec get_tax_codes(client :: ExOAPI.Client.t(), list(get_tax_codes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.TaxCode.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_tax_codes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -34,7 +43,9 @@ defmodule ExOAPI.Stripe.SDK.TaxCodes do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_tax_codes_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.TaxCode.t() | map()}
+          | {:error, any()}
   def get_tax_codes_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

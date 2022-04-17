@@ -8,7 +8,12 @@ defmodule ExOAPI.Stripe.SDK.Reporting do
           client :: ExOAPI.Client.t(),
           report_type :: String.t(),
           list(get_reporting_report_types_report_type_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Reporting_reportType.t()
+           | map()}
+          | {:error, any()}
   def get_reporting_report_types_report_type(%ExOAPI.Client{} = client, report_type, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -30,7 +35,17 @@ defmodule ExOAPI.Stripe.SDK.Reporting do
   @spec get_reporting_report_types(
           client :: ExOAPI.Client.t(),
           list(get_reporting_report_types_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Reporting_reportType.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_reporting_report_types(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -696,7 +711,10 @@ defmodule ExOAPI.Stripe.SDK.Reporting do
               :expand => [String.t()]
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Reporting_reportRun.t() | map()}
+          | {:error, any()}
   def post_reporting_report_runs(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -720,7 +738,17 @@ defmodule ExOAPI.Stripe.SDK.Reporting do
   @spec get_reporting_report_runs(
           client :: ExOAPI.Client.t(),
           list(get_reporting_report_runs_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Reporting_reportRun.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_reporting_report_runs(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -746,7 +774,10 @@ defmodule ExOAPI.Stripe.SDK.Reporting do
           client :: ExOAPI.Client.t(),
           report_run :: String.t(),
           list(get_reporting_report_runs_report_run_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Reporting_reportRun.t() | map()}
+          | {:error, any()}
   def get_reporting_report_runs_report_run(%ExOAPI.Client{} = client, report_run, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

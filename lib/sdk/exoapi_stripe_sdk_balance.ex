@@ -16,7 +16,16 @@ defmodule ExOAPI.Stripe.SDK.Balance do
           | {:currency, String.t()}
           | {:created, String.t()}
   @spec get_balance_history(client :: ExOAPI.Client.t(), list(get_balance_history_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.BalanceTransaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_balance_history(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -44,7 +53,8 @@ defmodule ExOAPI.Stripe.SDK.Balance do
   """
   @type get_balance_opts :: {:expand, String.t()}
   @spec get_balance(client :: ExOAPI.Client.t(), list(get_balance_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Balance.t() | map()}
+          | {:error, any()}
   def get_balance(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -68,7 +78,10 @@ defmodule ExOAPI.Stripe.SDK.Balance do
           client :: ExOAPI.Client.t(),
           id :: String.t(),
           list(get_balance_history_id_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.BalanceTransaction.t() | map()}
+          | {:error, any()}
   def get_balance_history_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

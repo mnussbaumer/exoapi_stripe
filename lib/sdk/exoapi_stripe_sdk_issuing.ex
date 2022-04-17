@@ -8,7 +8,12 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           authorization :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Issuing_authorization.t()
+           | map()}
+          | {:error, any()}
   def post_issuing_authorizations_authorization(%ExOAPI.Client{} = client, body, authorization) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -29,7 +34,12 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           authorization :: String.t(),
           list(get_issuing_authorizations_authorization_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Issuing_authorization.t()
+           | map()}
+          | {:error, any()}
   def get_issuing_authorizations_authorization(
         %ExOAPI.Client{} = client,
         authorization,
@@ -952,7 +962,9 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
             }
             | map(),
           card :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_card.t() | map()}
+          | {:error, any()}
   def post_issuing_cards_card(%ExOAPI.Client{} = client, body, card) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -973,7 +985,9 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           card :: String.t(),
           list(get_issuing_cards_card_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_card.t() | map()}
+          | {:error, any()}
   def get_issuing_cards_card(%ExOAPI.Client{} = client, card, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -996,7 +1010,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => map(), :expand => [String.t()]} | map(),
           settlement :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_settlement.t() | map()}
+          | {:error, any()}
   def post_issuing_settlements_settlement(%ExOAPI.Client{} = client, body, settlement) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1017,7 +1034,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           settlement :: String.t(),
           list(get_issuing_settlements_settlement_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_settlement.t() | map()}
+          | {:error, any()}
   def get_issuing_settlements_settlement(%ExOAPI.Client{} = client, settlement, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1042,7 +1062,16 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_issuing_settlements(client :: ExOAPI.Client.t(), list(get_issuing_settlements_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_settlement.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_settlements(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1075,7 +1104,17 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
   @spec get_issuing_transactions(
           client :: ExOAPI.Client.t(),
           list(get_issuing_transactions_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_transaction.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_transactions(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1111,7 +1150,17 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
   @spec get_issuing_authorizations(
           client :: ExOAPI.Client.t(),
           list(get_issuing_authorizations_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_authorization.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_authorizations(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1219,7 +1268,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_dispute.t() | map()}
+          | {:error, any()}
   def post_issuing_disputes(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1243,7 +1295,16 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           | {:ending_before, String.t()}
           | {:created, String.t()}
   @spec get_issuing_disputes(client :: ExOAPI.Client.t(), list(get_issuing_disputes_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_dispute.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_disputes(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1271,7 +1332,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           transaction :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_transaction.t() | map()}
+          | {:error, any()}
   def post_issuing_transactions_transaction(%ExOAPI.Client{} = client, body, transaction) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -1292,7 +1356,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           transaction :: String.t(),
           list(get_issuing_transactions_transaction_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_transaction.t() | map()}
+          | {:error, any()}
   def get_issuing_transactions_transaction(%ExOAPI.Client{} = client, transaction, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2230,7 +2297,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
               }
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_cardholder.t() | map()}
+          | {:error, any()}
   def post_issuing_cardholders(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2256,7 +2326,16 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           | {:email, String.t()}
           | {:created, String.t()}
   @spec get_issuing_cardholders(client :: ExOAPI.Client.t(), list(get_issuing_cardholders_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_cardholder.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_cardholders(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2286,7 +2365,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           dispute :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_dispute.t() | map()}
+          | {:error, any()}
   def post_issuing_disputes_dispute_submit(%ExOAPI.Client{} = client, body, dispute) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2386,7 +2468,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
             }
             | map(),
           dispute :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_dispute.t() | map()}
+          | {:error, any()}
   def post_issuing_disputes_dispute(%ExOAPI.Client{} = client, body, dispute) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2407,7 +2492,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           dispute :: String.t(),
           list(get_issuing_disputes_dispute_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_dispute.t() | map()}
+          | {:error, any()}
   def get_issuing_disputes_dispute(%ExOAPI.Client{} = client, dispute, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -2432,7 +2520,12 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
             %{:metadata => String.t() | map(), :expand => [String.t()], :amount => integer()}
             | map(),
           authorization :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Issuing_authorization.t()
+           | map()}
+          | {:error, any()}
   def post_issuing_authorizations_authorization_approve(
         %ExOAPI.Client{} = client,
         body,
@@ -2457,7 +2550,12 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           body :: %{:metadata => String.t() | map(), :expand => [String.t()]} | map(),
           authorization :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | ExOAPI.Stripe.Schemas.Issuing_authorization.t()
+           | map()}
+          | {:error, any()}
   def post_issuing_authorizations_authorization_decline(
         %ExOAPI.Client{} = client,
         body,
@@ -3393,7 +3491,9 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
               :cardholder => String.t()
             }
             | map()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_card.t() | map()}
+          | {:error, any()}
   def post_issuing_cards(%ExOAPI.Client{} = client, body) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -3421,7 +3521,16 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           | {:created, String.t()}
           | {:cardholder, String.t()}
   @spec get_issuing_cards(client :: ExOAPI.Client.t(), list(get_issuing_cards_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Issuing_card.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_issuing_cards(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -4367,7 +4476,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
             }
             | map(),
           cardholder :: String.t()
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_cardholder.t() | map()}
+          | {:error, any()}
   def post_issuing_cardholders_cardholder(%ExOAPI.Client{} = client, body, cardholder) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -4388,7 +4500,10 @@ defmodule ExOAPI.Stripe.SDK.Issuing do
           client :: ExOAPI.Client.t(),
           cardholder :: String.t(),
           list(get_issuing_cardholders_cardholder_opts())
-        ) :: {:ok, any()} | {:error, any()}
+        ) ::
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Issuing_cardholder.t() | map()}
+          | {:error, any()}
   def get_issuing_cardholders_cardholder(%ExOAPI.Client{} = client, cardholder, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)

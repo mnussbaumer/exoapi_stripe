@@ -5,7 +5,8 @@ defmodule ExOAPI.Stripe.SDK.Events do
   """
   @type get_events_id_opts :: {:expand, String.t()}
   @spec get_events_id(client :: ExOAPI.Client.t(), id :: String.t(), list(get_events_id_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok, ExOAPI.Stripe.Schemas.Error.t() | ExOAPI.Stripe.Schemas.Event.t() | map()}
+          | {:error, any()}
   def get_events_id(%ExOAPI.Client{} = client, id, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
@@ -33,7 +34,16 @@ defmodule ExOAPI.Stripe.SDK.Events do
           | {:delivery_success, String.t()}
           | {:created, String.t()}
   @spec get_events(client :: ExOAPI.Client.t(), list(get_events_opts())) ::
-          {:ok, any()} | {:error, any()}
+          {:ok,
+           ExOAPI.Stripe.Schemas.Error.t()
+           | %{
+               :url => String.t(),
+               :object => String.t() | :list,
+               :has_more => boolean(),
+               :data => [ExOAPI.Stripe.Schemas.Event.t()]
+             }
+           | map()}
+          | {:error, any()}
   def get_events(%ExOAPI.Client{} = client, opts \\ []) do
     client
     |> ExOAPI.Client.set_module(ExOAPI.Stripe.SDK)
