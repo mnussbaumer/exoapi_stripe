@@ -20,7 +20,7 @@ by adding `:exoapi_stripe` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:exoapi_stripe, "~> 0.1.0"}
+    {:exoapi_stripe, "~> 0.1.1"}
   ]
 end
 ```
