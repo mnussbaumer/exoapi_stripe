@@ -1,0 +1,52 @@
+defmodule ExOAPI.Stripe.Schemas.PaymentIntentPaymentMethodOptionsMandateOptionsAcssDebit do
+  use TypedEctoSchema
+  import Ecto.Changeset
+
+  @type params :: map()
+
+  @moduledoc """
+  **:custom_mandate_url** :: *:string*
+
+  A URL for custom mandate text
+
+
+  **:interval_description** :: *:string*
+
+  Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
+
+
+  **:payment_schedule** :: *:string*
+
+  Payment schedule for the mandate.
+
+
+  **:transaction_type** :: *:string*
+
+  Transaction type of the mandate.
+
+
+  """
+
+  @primary_key false
+  typed_embedded_schema do
+    field(:custom_mandate_url, :string)
+
+    field(:interval_description, :string)
+
+    field(:payment_schedule, Ecto.Enum, values: [:sporadic, :interval, :combined])
+
+    field(:transaction_type, Ecto.Enum, values: [:personal, :business])
+  end
+
+  @spec changeset(params()) :: Ecto.Changeset.t()
+  @spec changeset(__MODULE__.t(), params()) :: Ecto.Changeset.t()
+  def changeset(struct \\ %__MODULE__{}, params) do
+    struct
+    |> cast(params, [
+      :transaction_type,
+      :payment_schedule,
+      :interval_description,
+      :custom_mandate_url
+    ])
+  end
+end
