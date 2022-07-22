@@ -4,7 +4,7 @@ defmodule ExOAPI.Stripe.MixProject do
   def project do
     [
       app: :exoapi_stripe,
-      version: "0.1.3",
+      version: "0.1.4",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -34,7 +34,7 @@ defmodule ExOAPI.Stripe.MixProject do
 
   defp deps do
     [
-      {:ex_oapi, "~> 0.1.3"},
+      {:ex_oapi, "~> 0.1"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
     ]
   end
